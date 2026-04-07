@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA Interview Preparation Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 60px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            border-bottom: 3px solid #2c3e50;
+            padding-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 3em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        nav {
+            background: #ecf0f1;
+            padding: 20px;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            border-left: 5px solid #3498db;
+        }
+        
+        nav h2 {
+            color: #2c3e50;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        
+        nav ol {
+            margin-left: 20px;
+            color: #333;
+        }
+        
+        nav li {
+            margin-bottom: 8px;
+        }
+        
+        nav a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        
+        section {
+            margin-bottom: 50px;
+            scroll-margin-top: 80px;
+        }
+        
+        section:last-child {
+            margin-bottom: 0;
+        }
+        
+        h2 {
+            font-size: 2.2em;
+            color: #2c3e50;
+            margin-top: 40px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #3498db;
+            display: flex;
+            align-items: center;
+        }
+        
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #3498db;
+            border-radius: 50%;
+            margin-right: 12px;
+        }
+        
+        h3 {
+            font-size: 1.7em;
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        h4 {
+            font-size: 1.3em;
+            color: #555;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            text-decoration: underline;
+            text-decoration-color: #95a5a6;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 5px;
+        }
+        
+        .section-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: #3498db;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-right: 12px;
+            margin-bottom: 15px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+            color: #444;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #c7254e;
+        }
+        
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+            border-left: 5px solid #3498db;
+        }
+        
+        .box {
+            background: #ecf0f1;
+            border-left: 5px solid #3498db;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .box.warning {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+        }
+        
+        .box.success {
+            background: #d4edda;
+            border-left-color: #28a745;
+        }
+        
+        .box.important {
+            background: #f8d7da;
+            border-left-color: #dc3545;
+        }
+        
+        table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        thead {
+            background: #34495e;
+            color: white;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        tbody tr:hover {
+            background: #f5f5f5;
+        }
+        
+        tbody tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .star-section {
+            background: #fff9e6;
+            border: 2px solid #f39c12;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .star-section h4 {
+            color: #d68910;
+            margin-top: 0;
+        }
+        
+        .star-section .label {
+            display: inline-block;
+            background: #f39c12;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-right: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+        
+        .grid-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        
+        .grid-item:hover {
+            border-color: #3498db;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+        }
+        
+        .grid-item h4 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        .divider {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #3498db 20%, #3498db 80%, transparent);
+            margin: 40px 0;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #ecf0f1;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        .back-to-top {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .back-to-top:hover {
+            background: #2980b9;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header>
+            <h1>QA Interview Preparation Guide</h1>
+            <p class="subtitle">Comprehensive resource for software testing interviews</p>
+        </header>
+
+        <!-- TABLE OF CONTENTS -->
+        <nav>
+            <h2>📑 Table of Contents</h2>
+            <ol>
+                <li><a href="#section-1">Coding Problems & Algorithms</a></li>
+                <li><a href="#section-2">Behavioral Interview Prep</a>
+                    <ul>
+                        <li><a href="#subsec-2-1">Amazon 16 Leadership Principles</a></li>
+                        <li><a href="#subsec-2-2">Strengths & Weaknesses</a></li>
+                        <li><a href="#subsec-2-3">General Behavioral Questions</a></li>
+                    </ul>
+                </li>
+                <li><a href="#section-3">Sorting Algorithms</a></li>
+                <li><a href="#section-4">Technical Interview Topics</a></li>
+                <li><a href="#section-5">QA Best Practices</a></li>
+                <li><a href="#section-6">Pending Practice Problems</a></li>
+            </ol>
+        </nav>
+
+        <!-- SECTION 1: CODING PROBLEMS -->
+        <section id="section-1">
+            <h2>Coding Problems & Algorithms</h2>
+            
+            <h3>📌 Problem 1: Count Substrings Between X and Y</h3>
+            <div class="box">
+                <strong>Problem Statement:</strong> Given a string, two characters X and Y, count the number of substrings that start with X and end with Y.
+            </div>
+            
+            <h4>Java Solution:</h4>
+            <div class="code-block">
+public class CountSubstrings {
+    public static int countSubstrings(String str, char x, char y) {
+        int count = 0;
+        int startIndex = -1;
+        
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+            
+            // If current character is X, update startIndex
+            if (ch == x) {
+                startIndex = i;
+            }
+            // If current character is Y and startIndex is set, increment count
+            else if (ch == y && startIndex != -1) {
+                count += (i - startIndex);
+            }
+        }
+        return count;
+    }
+    
+    public static void main(String[] args) {
+        String str = "abbcaceghcak";
+        char x = 'a';
+        char y = 'c';
+        System.out.println(countSubstrings(str, x, y)); // Output: 5
+    }
+}
+            </div>
+            
+            <h3>📌 Problem 2: Character Count in String</h3>
+            <div class="box">
+                <strong>Challenge:</strong> Count the number of characters in the string "today is thursday, tomorrow is friday" (excluding spaces).
+            </div>
+            
+            <h4>Java Solution:</h4>
+            <div class="code-block">
+public class CharacterCount {
+    public static void main(String[] args) {
+        String str = "today is thursday, tomorrow is friday";
+        
+        // Remove white spaces from the string
+        str = str.replaceAll("\\s", "");
+        
+        // Count the number of characters in the string
+        int count = str.length();
+        
+        // Print the count of characters
+        System.out.println("Number of characters in the string: " + count);
+    }
+}
+            </div>
+
+            <div class="divider"></div>
+
+            <h3>🎯 Key Concepts to Master:</h3>
+            <ul>
+                <li>String manipulation and iteration</li>
+                <li>Pattern recognition and substring logic</li>
+                <li>Efficient time complexity (O(n) solutions)</li>
+                <li>Edge case handling</li>
+            </ul>
+        </section>
+
+        <!-- SECTION 2: BEHAVIORAL INTERVIEW -->
+        <section id="section-2">
+            <h2>Behavioral Interview Preparation</h2>
+            
+            <h3 id="subsec-2-1">🏆 Amazon 16 Leadership Principles</h3>
+            
+            <p>The STAR method helps structure responses: <strong>Situation → Task → Action → Result</strong></p>
+            
+            <div class="grid">
+                <div class="grid-item">
+                    <h4>1. Customer Obsession</h4>
+                    <p>Focus on solving customer problems and improving user experience. Example: Conducting thorough testing during checkout flow improvements.</p>
+                </div>
+                
+                <div class="grid-item">
+                    <h4>2. Bias for Action</h4>
+                    <p>Make quick decisions when problems arise. Example: Implementing emergency workarounds for critical defects before release.</p>
+                </div>
+                
+                <div class="grid-item">
+                    <h4>3. Learn and Be Curious</h4>
+                    <p>Continuously expand knowledge. Example: Learning new automation frameworks and tools to improve efficiency.</p>
+                </div>
+                
+                <div class="grid-item">
+                    <h4>4. Have Backbone; Disagree and Commit</h4>
+                    <p>Voice concerns professionally, then support decisions. Example: Suggesting alternative testing strategies with data-backed reasoning.</p>
+                </div>
+                
+                <div class="grid-item">
+                    <h4>5. Strive to Be Earth's Best Employer</h4>
+                    <p>Foster positive team culture. Example: Organizing team workshops and improving collaboration.</p>
+                </div>
+                
+                <div class="grid-item">
+                    <h4>6. Success and Scale Bring Broad Responsibility</h4>
+                    <p>Ensure scalability as projects grow. Example: Optimizing test automation framework for increased test cases.</p>
+                </div>
+            </div>
+
+            <div class="star-section">
+                <h4>⭐ STAR Response Example: Customer Obsession</h4>
+                <p>
+                    <span class="label">SITUATION:</span> Customers reported usability issues in the checkout process.<br>
+                    <span class="label">TASK:</span> Thoroughly test the checkout flow and identify all issues.<br>
+                    <span class="label">ACTION:</span> Conducted exploratory testing, collaborated with UX designers, simulated various scenarios.<br>
+                    <span class="label">RESULT:</span> Identified and resolved issues before release, significantly improving user experience.
+                </p>
+            </div>
+
+            <h3 id="subsec-2-2">💪 Strengths & Weaknesses</h3>
+            
+            <h4>Three Key Strengths:</h4>
+            <ol>
+                <li>
+                    <strong>Attention to Detail</strong> - Meticulous approach helps identify subtle defects that could compromise quality. Consistent contributor to reliable deliverables.
+                </li>
+                <li>
+                    <strong>Adaptability</strong> - Easily adjust to changing requirements and new technologies. Quick learner who embraces new methodologies.
+                </li>
+                <li>
+                    <strong>Good Communication Skills</strong> - Clear articulation of complex testing issues to cross-functional teams. Effective collaboration with developers and stakeholders.
+                </li>
+            </ol>
+
+            <h4>Areas for Improvement:</h4>
+            <ol>
+                <li>
+                    <strong>Active Listening</strong> - Tendency to speak before fully hearing others. <em>Solution:</em> Practicing mindfulness and reflective listening techniques.
+                </li>
+                <li>
+                    <strong>Delegation</strong> - Prefer doing tasks independently rather than delegating. <em>Solution:</em> Actively working on trusting team members and distributing workload.
+                </li>
+                <li>
+                    <strong>Tactfulness</strong> - Sometimes lacking diplomacy in feedback. <em>Solution:</em> Being more mindful of communication delivery and perspective of others.
+                </li>
+            </ol>
+
+            <h3 id="subsec-2-3">❓ General Behavioral Questions</h3>
+            
+            <div class="star-section">
+                <h4>Most Complex Problem Solved</h4>
+                <p>
+                    <span class="label">SITUATION:</span> Critical performance issue during major release affecting application responsiveness.<br>
+                    <span class="label">TASK:</span> Identify root cause and implement solution to improve performance.<br>
+                    <span class="label">ACTION:</span> Conducted performance profiling, analyzed logs, identified database query bottlenecks. Optimized queries, implemented caching, parallelized operations.<br>
+                    <span class="label">RESULT:</span> 40% improvement in response time; resolved complex performance issue successfully.
+                </p>
+            </div>
+
+            <div class="star-section">
+                <h4>Career Failure & Learning</h4>
+                <p>
+                    <span class="label">SITUATION:</span> Early in career, underestimated importance of communication in cross-functional team.<br>
+                    <span class="label">TASK:</span> Address communication gaps and improve collaboration.<br>
+                    <span class="label">ACTION:</span> Initiated regular team meetings, encouraged open communication, participated in communication workshops.<br>
+                    <span class="label">RESULT:</span> Improved team dynamics and project predictability; learned value of transparent communication.
+                </p>
+            </div>
+
+            <div class="star-section">
+                <h4>Disagreement with Manager</h4>
+                <p>
+                    <span class="label">SITUATION:</span> Different opinion on testing task prioritization during crucial release.<br>
+                    <span class="label">TASK:</span> Address disagreement while maintaining positive working relationship.<br>
+                    <span class="label">ACTION:</span> Requested one-on-one meeting, presented data on risks, suggested alternative approach.<br>
+                    <span class="label">RESULT:</span> Reached mutual understanding; strengthened working relationship with revised testing plan.
+                </p>
+            </div>
+
+            <div class="star-section">
+                <h4>Disagreement with Client</h4>
+                <p>
+                    <span class="label">SITUATION:</span> Client had different expectations regarding testing scope for a feature.<br>
+                    <span class="label">TASK:</span> Align expectations to ensure successful testing phase.<br>
+                    <span class="label">ACTION:</span> Scheduled meeting, actively listened to concerns, presented testing strategy, made relevant adjustments.<br>
+                    <span class="label">RESULT:</span> Reached consensus; maintained client confidence in testing process.
+                </p>
+            </div>
+
+            <div class="divider"></div>
+        </section>
+
+        <!-- SECTION 3: SORTING ALGORITHMS -->
+        <section id="section-3">
+            <h2>Sorting Algorithms</h2>
+            
+            <h3>🔹 Bubble Sort</h3>
+            <div class="box success">
+                <strong>Time Complexity:</strong> O(n²) | <strong>Space Complexity:</strong> O(1) | <strong>Best For:</strong> Nearly sorted data
+            </div>
+            
+            <div class="code-block">
+public class BubbleSort {
+    public static void bubbleSort(int[] arr) {
+        boolean swapped = true;
+        int j = 0;
+        int tmp;
+        
+        while (swapped) {
+            swapped = false;
+            j++;
+            for (int i = 0; i < arr.length - j; i++) {
+                if (arr[i] > arr[i + 1]) {
+                    tmp = arr[i];
+                    arr[i] = arr[i + 1];
+                    arr[i + 1] = tmp;
+                    swapped = true;
+                }
+            }
+        }
+    }
+    
+    public static void main(String[] args) {
+        int arr[] = {3, 60, 35, 2, -45, 320, 5};
+        bubbleSort(arr);
+        System.out.print("Sorted: ");
+        for (int i : arr) {
+            System.out.print(i + " ");
+        }
+    }
+}
+            </div>
+
+            <h3>🔹 Selection Sort</h3>
+            <div class="box success">
+                <strong>Time Complexity:</strong> O(n²) | <strong>Space Complexity:</strong> O(1) | <strong>Best For:</strong> When memory writes are costly
+            </div>
+            
+            <div class="code-block">
+public class SelectionSort {
+    public static int[] doSelectionSort(int[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            int index = i;
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[j] < arr[index]) {
+                    index = j;
+                }
+            }
+            int smallerNumber = arr[index];
+            arr[index] = arr[i];
+            arr[i] = smallerNumber;
+        }
+        return arr;
+    }
+    
+    public static void main(String[] args) {
+        int[] arr1 = {10, 34, 2, 56, 7, 67, 88, 42};
+        int[] arr2 = doSelectionSort(arr1);
+        for (int i : arr2) {
+            System.out.print(i + " ");
+        }
+    }
+}
+            </div>
+
+            <h3>🔹 Insertion Sort</h3>
+            <div class="box success">
+                <strong>Time Complexity:</strong> O(n²) | <strong>Space Complexity:</strong> O(1) | <strong>Best For:</strong> Small or nearly sorted arrays
+            </div>
+            
+            <div class="code-block">
+public class InsertionSort {
+    public static int[] doInsertionSort(int[] input) {
+        int temp;
+        for (int i = 1; i < input.length; i++) {
+            for (int j = i; j > 0; j--) {
+                if (input[j] < input[j - 1]) {
+                    temp = input[j];
+                    input[j] = input[j - 1];
+                    input[j - 1] = temp;
+                }
+            }
+        }
+        return input;
+    }
+    
+    public static void main(String[] args) {
+        int[] arr1 = {10, 34, 2, 56, 7, 67, 88, 42};
+        int[] arr2 = doInsertionSort(arr1);
+        for (int i : arr2) {
+            System.out.print(i + " ");
+        }
+    }
+}
+            </div>
+
+            <div class="divider"></div>
+        </section>
+
+        <!-- SECTION 4: TECHNICAL TOPICS -->
+        <section id="section-4">
+            <h2>Technical Interview Topics</h2>
+            
+            <div class="grid">
+                <div class="grid-item">
+                    <h4>1️⃣ Data Structures</h4>
+                    <ul>
+                        <li>Arrays</li>
+                        <li>Linked Lists</li>
+                        <li>Binary Trees</li>
+                        <li>Stacks & Queues</li>
+                    </ul>
+                </div>
+                
+                <div class="grid-item">
+                    <h4>2️⃣ Advanced Topics</h4>
+                    <ul>
+                        <li>Mirror Tree</li>
+                        <li>Palindrome Validation</li>
+                        <li>Matrix Rotation</li>
+                        <li>Graph Traversal</li>
+                    </ul>
+                </div>
+                
+                <div class="grid-item">
+                    <h4>3️⃣ Array Operations</h4>
+                    <ul>
+                        <li>Level Order Traversal</li>
+                        <li>Subarray Problems</li>
+                        <li>Missing Numbers</li>
+                        <li>Duplicate Detection</li>
+                    </ul>
+                </div>
+                
+                <div class="grid-item">
+                    <h4>4️⃣ String Manipulation</h4>
+                    <ul>
+                        <li>String Reversal</li>
+                        <li>Palindrome Check</li>
+                        <li>String Compression</li>
+                        <li>Character Frequency</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>💡 Interview Optimization Techniques</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Technique</th>
+                        <th>Use Case</th>
+                        <th>Example Problem</th>
+                        <th>Time Complexity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Two Pointer</strong></td>
+                        <td>Sorted arrays, Palindromes</td>
+                        <td>Check if string is palindrome</td>
+                        <td>O(n)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sliding Window</strong></td>
+                        <td>Substrings, Subarrays</td>
+                        <td>Longest substring without repeating chars</td>
+                        <td>O(n)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hash Map</strong></td>
+                        <td>Frequency counting</td>
+                        <td>Find duplicates</td>
+                        <td>O(n)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Binary Search</strong></td>
+                        <td>Sorted data search</td>
+                        <td>Find element in sorted array</td>
+                        <td>O(log n)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="divider"></div>
+        </section>
+
+        <!-- SECTION 5: QA BEST PRACTICES -->
+        <section id="section-5">
+            <h2>QA Best Practices & Responsibilities</h2>
+            
+            <h3>📋 Day-to-Day Testing Tasks</h3>
+            
+            <div class="grid">
+                <div class="grid-item">
+                    <h4>Planning & Analysis</h4>
+                    <ul>
+                        <li>Analyze business requirements</li>
+                        <li>Clarify functional specifications</li>
+                        <li>Design test cases</li>
+                        <li>Plan test coverage</li>
+                    </ul>
+                </div>
+                
+                <div class="grid-item">
+                    <h4>Execution & Documentation</h4>
+                    <ul>
+                        <li>Execute test cases</li>
+                        <li>Perform exploratory testing</li>
+                        <li>Document defects</li>
+                        <li>Log issues systematically</li>
+                    </ul>
+                </div>
+                
+                <div class="grid-item">
+                    <h4>Collaboration & Communication</h4>
+                    <ul>
+                        <li>Attend sprint meetings</li>
+                        <li>Collaborate with developers</li>
+                        <li>Report on testing progress</li>
+                        <li>Support UAT sessions</li>
+                    </ul>
+                </div>
+                
+                <div class="grid-item">
+                    <h4>Quality Management</h4>
+                    <ul>
+                        <li>Validate fixes</li>
+                        <li>Manage test data</li>
+                        <li>Ensure confidentiality</li>
+                        <li>Maintain test pyramid</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="box important">
+                <strong>⚠️ Critical Success Factors:</strong>
+                <ul>
+                    <li>Shift-left testing approach for early bug detection</li>
+                    <li>Proper test automation strategy and pyramid</li>
+                    <li>Risk-based testing for efficient coverage</li>
+                    <li>Continuous integration and deployment</li>
+                    <li>Transparent communication with stakeholders</li>
+                </ul>
+            </div>
+
+            <div class="divider"></div>
+        </section>
+
+        <!-- SECTION 6: PENDING PROBLEMS -->
+        <section id="section-6">
+            <h2>Practice Problems to Master</h2>
+            
+            <h3>🎯 High Priority Problems</h3>
+            
+            <div class="grid">
+                <div class="grid-item">
+                    <h4>String Problems</h4>
+                    <ol>
+                        <li>Find largest palindrome</li>
+                        <li>String compression</li>
+                        <li>Duplicate character detection</li>
+                        <li>String reversal (without special chars)</li>
+                        <li>Longest substring without repeating chars</li>
+                        <li>Zigzag conversion</li>
+                    </ol>
+                </div>
+                
+                <div class="grid-item">
+                    <h4>Array Problems</h4>
+                    <ol>
+                        <li>Array sorting algorithms</li>
+                        <li>Frequency of each element</li>
+                        <li>Print elements in reverse</li>
+                        <li>Find max/min/second max/min</li>
+                        <li>Sum of all items</li>
+                        <li>Print odd and even numbers</li>
+                    </ol>
+                </div>
+                
+                <div class="grid-item">
+                    <h4>Matrix & Tree Problems</h4>
+                    <ol>
+                        <li>Matrix transpose</li>
+                        <li>Matrix multiplication</li>
+                        <li>Matrix rotation by 90°</li>
+                        <li>Linked list operations</li>
+                        <li>Binary tree problems</li>
+                        <li>Check palindrome linked list</li>
+                    </ol>
+                </div>
+                
+                <div class="grid-item">
+                    <h4>Advanced Problems</h4>
+                    <ol>
+                        <li>Binary search</li>
+                        <li>Subarray with given sum</li>
+                        <li>Missing number in array</li>
+                        <li>Balanced parentheses</li>
+                        <li>Find duplicates</li>
+                        <li>Move negatives to left</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h3>🏢 Company-Specific Problems</h3>
+            
+            <div class="star-section" style="background: #e3f2fd; border-color: #2196f3;">
+                <h4>Amazon</h4>
+                <p>Phone number uniqueness validation (O(n) space complexity optimization from O(n²))</p>
+                <p>Level order traversal in binary trees</p>
+                <p>Array with absolute difference 1 between adjacent elements</p>
+            </div>
+
+            <div class="star-section" style="background: #f3e5f5; border-color: #9c27b0;">
+                <h4>BlackRock</h4>
+                <p>Find how many 0's need to be flipped consecutively to maximize 1's</p>
+                <p>Find frequency of string in large paragraph</p>
+            </div>
+
+            <div class="box warning">
+                <strong>📝 Solve these independently without external help or solutions</strong>
+            </div>
+
+            <div class="divider"></div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            <p>✅ QA Interview Preparation Guide - Last Updated: April 3, 2026</p>
+            <p>Use this document for preparation. Practice consistently and focus on understanding concepts, not just memorizing solutions.</p>
+            <a href="#" class="back-to-top">↑ Back to Top</a>
+        </footer>
+    </div>
+</body>
+</html>
