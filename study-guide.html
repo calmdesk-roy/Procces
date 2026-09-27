@@ -1,0 +1,2079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A Java programming study guide with examples, approaches, and complexity analysis.">
+    <title>Programming Study Guide</title>
+    <style>
+        :root {
+            --ink: #172033;
+            --muted: #5c677d;
+            --surface: #ffffff;
+            --canvas: #f4f7fb;
+            --line: #dce3ee;
+            --accent: #1d4ed8;
+            --accent-soft: #e8efff;
+            --code: #f8fafc;
+            --code-ink: #172033;
+            --code-line: #d8e1ee;
+            --syntax-keyword: #6d28d9;
+            --syntax-type: #075985;
+            --syntax-method: #0f766e;
+            --syntax-variable: #9a3412;
+            --syntax-string: #a16207;
+            --syntax-number: #be123c;
+            --syntax-comment: #64748b;
+            --syntax-operator: #0369a1;
+            --success: #166534;
+        }
+
+        body[data-code-theme="cool-contrast"] {
+            --code: #f3f8ff;
+            --code-ink: #102a43;
+            --code-line: #b9d2f4;
+            --syntax-keyword: #6d28d9;
+            --syntax-type: #075985;
+            --syntax-method: #047857;
+            --syntax-variable: #9f1239;
+            --syntax-string: #a16207;
+            --syntax-number: #b91c1c;
+            --syntax-comment: #475569;
+            --syntax-operator: #1d4ed8;
+        }
+
+        body[data-code-theme="warm-contrast"] {
+            --code: #fffdf7;
+            --code-ink: #292524;
+            --code-line: #ded2ba;
+            --syntax-keyword: #7e22ce;
+            --syntax-type: #1d4ed8;
+            --syntax-method: #047857;
+            --syntax-variable: #9a3412;
+            --syntax-string: #92400e;
+            --syntax-number: #be123c;
+            --syntax-comment: #57534e;
+            --syntax-operator: #0f766e;
+        }
+
+        body[data-code-theme="contrast"] {
+            --code: #fafafa;
+            --code-ink: #111827;
+            --code-line: #cbd5e1;
+            --syntax-keyword: #7e22ce;
+            --syntax-type: #1d4ed8;
+            --syntax-method: #047857;
+            --syntax-variable: #9a3412;
+            --syntax-string: #a16207;
+            --syntax-number: #be123c;
+            --syntax-comment: #475569;
+            --syntax-operator: #0f766e;
+        }
+
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            background: var(--canvas);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.6;
+        }
+
+        .page {
+            width: min(1100px, calc(100% - 32px));
+            margin: 20px auto;
+            padding: clamp(20px, 4vw, 44px);
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            box-shadow: 0 16px 42px rgba(23, 32, 51, 0.08);
+        }
+
+        header {
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .eyebrow {
+            margin: 0 0 8px;
+            color: var(--accent);
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        h1, h2, h3, h4 { line-height: 1.25; }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(2rem, 5vw, 3.25rem);
+            letter-spacing: -0.045em;
+        }
+
+        h2 {
+            margin: 0 0 18px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--accent);
+            font-size: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        h3 {
+            margin: 28px 0 10px;
+            font-size: 1.35rem;
+        }
+
+        h4 { margin: 14px 0 6px; }
+
+        p { margin: 0 0 10px; }
+
+        .intro {
+            max-width: 70ch;
+            margin: 12px 0 0;
+            color: var(--muted);
+            font-size: 1.08rem;
+        }
+
+        nav {
+            margin: 24px 0 32px;
+            padding: 16px 20px;
+            background: #f8faff;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+        }
+
+        nav h2 {
+            margin-bottom: 12px;
+            padding: 0;
+            border: 0;
+            font-size: 1.1rem;
+        }
+
+        nav ul + h2 { margin-top: 16px; }
+
+        nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 18px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .question-index {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 4px 24px;
+            margin: 14px 0 0;
+            padding-left: 22px;
+        }
+
+        .question-index li { margin: 2px 0; }
+
+        .migration-status {
+            display: inline-block;
+            min-width: 84px;
+            margin-right: 6px;
+            padding: 1px 6px;
+            color: #7c2d12;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .migration-status.done {
+            color: #166534;
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+        }
+
+        a { color: var(--accent); }
+        a:hover { color: #1e40af; }
+
+        section { margin-top: 36px; scroll-margin-top: 20px; }
+
+        .notice, .problem-summary, .complexity {
+            padding: 16px 18px;
+            border-radius: 10px;
+        }
+
+        .notice {
+            margin-bottom: 24px;
+            color: #243b64;
+            background: var(--accent-soft);
+            border-left: 4px solid var(--accent);
+        }
+
+        .problem {
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            scroll-margin-top: 20px;
+        }
+
+        .problem > h3 { margin-top: 0; }
+
+        .problem-summary {
+            background: #f8fafc;
+            border-left: 4px solid var(--accent);
+        }
+
+        .examples {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .example {
+            padding: 12px;
+            background: #f8fafc;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+        }
+
+        .example > strong, .complexity strong { display: block; margin-bottom: 4px; }
+        .example p { margin: 6px 0; }
+
+        .source-visual {
+            width: fit-content;
+            max-width: 100%;
+            margin: 12px auto;
+            padding: 8px;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+        }
+
+        .source-visual img {
+            display: block;
+            width: min(100%, 620px);
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .source-visual figcaption {
+            margin-top: 7px;
+            color: var(--muted);
+            font-size: 0.84rem;
+            text-align: center;
+        }
+
+        .source-visual-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .source-visual-gallery .source-visual {
+            width: auto;
+            margin: 0;
+        }
+
+        .source-visual-gallery .source-visual img { width: 100%; }
+
+        .complexity {
+            margin: 14px 0;
+            color: var(--success);
+            background: #effaf3;
+            border: 1px solid #bfe4cc;
+        }
+
+        .complexity span { display: inline-block; margin-right: 32px; }
+
+        .complexity-reason {
+            margin: -2px 0 14px;
+            padding: 0 2px;
+            color: #3f4b5e;
+        }
+
+        .complexity-reason p { margin: 4px 0; }
+
+        pre {
+            margin: 12px 0 0;
+            padding: 16px;
+            overflow-x: auto;
+            color: var(--code-ink);
+            background: var(--code);
+            border: 1px solid var(--code-line);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            line-height: 1.55;
+            tab-size: 4;
+        }
+
+        code {
+            padding: 0.1em 0.35em;
+            color: #1e3a8a;
+            background: #eaf2ff;
+            border-radius: 4px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        }
+
+        pre code {
+            padding: 0;
+            color: inherit;
+            background: transparent;
+            border-radius: 0;
+        }
+
+        .token-keyword { color: var(--syntax-keyword); }
+        .token-type { color: var(--syntax-type); }
+        .token-method { color: var(--syntax-method); }
+        .token-variable { color: var(--syntax-variable); }
+        .token-string { color: var(--syntax-string); }
+        .token-number { color: var(--syntax-number); }
+        .token-comment { color: var(--syntax-comment); font-style: italic; }
+        .token-operator { color: var(--syntax-operator); }
+
+        .theme-picker {
+            margin: 0 0 28px;
+            padding: 14px 16px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: #fbfcfe;
+        }
+
+        .theme-picker p { margin-bottom: 12px; color: var(--muted); }
+
+        .theme-picker h2 {
+            margin: 0 0 8px;
+            padding: 0;
+            border: 0;
+            font-size: 1.1rem;
+        }
+
+        .theme-options { display: flex; flex-wrap: wrap; gap: 8px; }
+
+        .theme-option {
+            padding: 7px 11px;
+            color: #1e3a8a;
+            background: #fff;
+            border: 1px solid #b9c7dc;
+            border-radius: 7px;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 700;
+        }
+
+        .theme-option[aria-pressed="true"] {
+            color: #fff;
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .back-to-top {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 10;
+            padding: 9px 13px;
+            color: #fff;
+            background: var(--accent);
+            border-radius: 8px;
+            box-shadow: 0 5px 16px rgba(29, 78, 216, 0.28);
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .back-to-top:hover { color: #fff; background: #1e40af; }
+
+        ol, ul { padding-left: 24px; }
+        li { margin: 6px 0; }
+
+        table {
+            width: 100%;
+            margin: 14px 0;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid var(--line);
+        }
+
+        th { background: #f1f5f9; }
+
+        .backlog {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .backlog article {
+            padding: 16px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+        }
+
+        footer {
+            margin-top: 36px;
+            padding-top: 18px;
+            color: var(--muted);
+            border-top: 1px solid var(--line);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 640px) {
+            .page { width: 100%; margin: 0; border: 0; border-radius: 0; }
+            .examples, .backlog, .question-index, .source-visual-gallery { grid-template-columns: 1fr; }
+            .problem { padding: 20px; }
+            th, td { padding: 9px; }
+            .back-to-top { right: 14px; bottom: 14px; }
+        }
+    </style>
+</head>
+<body data-code-theme="contrast">
+    <main class="page" id="top">
+        <header>
+            <p class="eyebrow">Java and Data Structures</p>
+            <h1>Programming Study Guide</h1>
+            <p class="intro">A focused collection of programming problems with a clear prompt, example, approach, Java solution, and complexity analysis. The original Google Docs export remains unchanged while its useful material is migrated here.</p>
+        </header>
+
+        <nav aria-label="Contents">
+            <h2>Contents</h2>
+            <ul>
+                <li><a href="#how-to-use">How to use this guide</a></li>
+                <li><a href="#problems">Solved problems</a></li>
+                <li><a href="#sorting">Sorting algorithms</a></li>
+                <li><a href="#backlog">Practice backlog</a></li>
+            </ul>
+            <h2>Original-document migration index</h2>
+            <ol class="question-index">
+                <li><span class="migration-status">Review</span><a href="#count-distinct-characters">1. Find number of characters in string, only characters</a></li>
+                <li><span class="migration-status">Review</span><a href="#n-repeated-element">2. N-Repeated Element in Size 2N Array</a></li>
+                <li><span class="migration-status">Review</span><a href="#last-four-characters">3. Print last 4 Characters of a String</a></li>
+                <li><span class="migration-status">Review</span><a href="#reverse-string">4. String reverse</a></li>
+                <li><span class="migration-status">Review</span><a href="#reverse-integer">5. Java program to reverse number</a></li>
+                <li><span class="migration-status">Review</span><a href="#factorial">6. Java program to find factorial</a></li>
+                <li><span class="migration-status done">Done</span><a href="#print-prime-numbers">7. Print Prime Numbers</a></li>
+                <li><span class="migration-status">Review</span><a href="#all-unique-characters">8. To Determine If String Has All Unique Characters</a></li>
+                <li><span class="migration-status">Review</span><a href="#fibonacci-series">9. Fibonacci Series</a></li>
+                <li><span class="migration-status">Review</span><a href="#sort-zero-one">10. Array [0,1] in sorted order</a></li>
+                <li><span class="migration-status done">Done</span><a href="#sort-colors">11. Sort [0,1,2] array elements (Sort Colors)</a></li>
+                <li><span class="migration-status done">Done</span><a href="#first-unique-character">12. First Unique Character in a String</a></li>
+                <li><span class="migration-status done">Done</span><a href="#three-sum">13. 3Sum</a></li>
+                <li><span class="migration-status done">Done</span><a href="#valid-palindrome-ii">14. Valid Palindrome II</a></li>
+                <li><span class="migration-status done">Done</span><a href="#duplicate-characters">15. Print duplicateCharsInString</a></li>
+                <li><span class="migration-status done">Done</span><a href="#max-number-rearranged">16. MaxNumRearraged make largest number</a></li>
+                <li><span class="migration-status done">Done</span><a href="#array-rotation">17. Shift array elements left/right Rotate</a></li>
+                <li><span class="migration-status done">Done</span><a href="#staircase">18. Staircase</a></li>
+                <li><span class="migration-status done">Done</span><a href="#binary-search-source">19. Binary Search</a></li>
+                <li><span class="migration-status done">Done</span><a href="#pangram">20. Pangram or not</a></li>
+                <li><span class="migration-status done">Done</span><a href="#array-minimum-maximum">21. Maximum and minimum of an array using minimum number of comparisons</a></li>
+                <li><span class="migration-status done">Done</span><a href="#rotated-array-pivot">22. Pivot of Sorted Rotated Array</a></li>
+                <li><span class="migration-status done">Done</span><a href="#running-sum">23. Running Sum of 1D Array</a></li>
+                <li><span class="migration-status done">Done</span><a href="#pivot-index">24. Find Pivot Index</a></li>
+                <li><span class="migration-status done">Done</span><a href="#valid-palindrome-source">25. Valid Palindrome</a></li>
+                <li><span class="migration-status done">Done</span><a href="#valid-anagram">26. Valid Anagram</a></li>
+                <li><span class="migration-status done">Done</span><a href="#stream-string-sort">27. Sort Java String using Stream API</a></li>
+                <li><span class="migration-status done">Done</span><a href="#rest-assured-deserialization">28. Deserialization in Rest Assured</a></li>
+                <li><span class="migration-status done">Done</span><a href="#flood-fill">29. Flood Fill</a></li>
+                <li><span class="migration-status done">Done</span><a href="#lowest-common-ancestor-bst">30. Lowest Common Ancestor of a Binary Search Tree</a></li>
+                <li><span class="migration-status done">Done</span><a href="#balanced-binary-tree">31. Balanced Binary Tree</a></li>
+                <li><span class="migration-status done">Done</span><a href="#first-bad-version">32. First Bad Version</a></li>
+                <li><span class="migration-status done">Done</span><a href="#ransom-note">33. Ransom Note</a></li>
+                <li><span class="migration-status done">Done</span><a href="#four-sum-ii">34. 4 Sum II</a></li>
+                <li><span class="migration-status done">Done</span><a href="#fizz-buzz">35. FizzBuzz</a></li>
+                <li><span class="migration-status done">Done</span><a href="#longest-substring-k-repeats">36. Longest Substring with At Least K Repeating Characters</a></li>
+                <li><span class="migration-status done">Done</span><a href="#kth-smallest-matrix">37. Kth Smallest Element in a Sorted Matrix</a></li>
+                <li><span class="migration-status done">Done</span><a href="#sum-without-operators">38. Sum of Two Integers without + and -</a></li>
+                <li><span class="migration-status done">Done</span><a href="#subtract-without-operators">39. Subtract Two Integers without + and -</a></li>
+                <li><span class="migration-status done">Done</span><a href="#reverse-preserving-spaces">40. Reverse a String Preserving Spaces</a></li>
+                <li><span class="migration-status">In progress</span>41. Reverse Each Word and Capitalize</li>
+                <li><span class="migration-status">In progress</span>42. Implement Stack using Queues</li>
+                <li><span class="migration-status">In progress</span>43. Implement Queue using Stacks</li>
+                <li><span class="migration-status">In progress</span>44. Top K Frequent Elements</li>
+                <li><span class="migration-status">In progress</span>45. Isomorphic Strings</li>
+                <li><span class="migration-status">In progress</span>46. Squares of a Sorted Array</li>
+                <li><span class="migration-status">In progress</span>47. Increasing Triplet Subsequence</li>
+                <li><span class="migration-status">In progress</span>48. Largest Perimeter Triangle</li>
+                <li><span class="migration-status">In progress</span>49. Destination City</li>
+                <li><span class="migration-status">In progress</span>50. Maximum Average Subarray I</li>
+                <li><span class="migration-status">In progress</span>51. Pattern123</li>
+                <li><span class="migration-status">In progress</span>52. Pattern123Fibo</li>
+                <li><span class="migration-status">In progress</span>53. Pattern123EvenRepeat</li>
+            </ol>
+        </nav>
+
+        <section class="theme-picker" aria-labelledby="theme-heading">
+            <h2 id="theme-heading">Java code theme</h2>
+            <p>Choose the light palette that makes code roles easiest for you to scan. Keywords, types, methods, variables, strings, and numbers use separate colors in every option.</p>
+            <div class="theme-options" role="group" aria-label="Java code theme options">
+                <button class="theme-option" type="button" data-theme="contrast" aria-pressed="true">High contrast</button>
+                <button class="theme-option" type="button" data-theme="cool-contrast" aria-pressed="false">Cool contrast</button>
+                <button class="theme-option" type="button" data-theme="warm-contrast" aria-pressed="false">Warm contrast</button>
+            </div>
+        </section>
+
+        <section id="how-to-use">
+            <h2>How to use this guide</h2>
+            <div class="notice">
+                Try each problem before opening its solution. When reviewing, explain the approach aloud, trace the supplied example, and then implement it without looking.
+            </div>
+            <ol>
+                <li>Read the problem and identify the input, output, and edge cases.</li>
+                <li>Choose the pattern before coding: hash map, two pointers, binary search, or in-place array update.</li>
+                <li>State both time and space complexity.</li>
+                <li>Run the provided example and at least one edge case.</li>
+            </ol>
+        </section>
+
+        <section id="problems">
+            <h2>Solved problems</h2>
+
+            <article class="problem" id="count-substrings">
+                <h3>1. Count Substrings Between Two Characters</h3>
+                <div class="problem-summary">
+                    <strong>Problem:</strong> Given a string and characters <code>x</code> and <code>y</code>, count every substring that starts with <code>x</code> and ends with <code>y</code>. Matching is case-sensitive.
+                </div>
+                <div class="examples">
+                    <div class="example">
+                        <strong>Example 1</strong>
+                        <p><strong>Input:</strong> <code>"abxcayc"</code>, <code>x = 'a'</code>, <code>y = 'c'</code></p>
+                        <p><strong>Output:</strong> <code>3</code></p>
+                    </div>
+                    <div class="example">
+                        <strong>Example 2</strong>
+                        <p><strong>Input:</strong> <code>"aabcc"</code>, <code>x = 'a'</code>, <code>y = 'c'</code></p>
+                        <p><strong>Output:</strong> <code>4</code></p>
+                    </div>
+                </div>
+                <p><strong>Explanation:</strong> The valid substrings are <code>abxc</code>, <code>abxcayc</code>, and <code>ayc</code>.</p>
+                <p><strong>Approach:</strong> Count how many <code>x</code> characters have appeared. On every <code>y</code>, add that count because each earlier <code>x</code> creates one valid start position.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">CountSubstrings</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">long</span> <span class="token-method">countSubstrings</span>(<span class="token-type">String</span> <span class="token-variable">text</span>, <span class="token-type">char</span> <span class="token-variable">x</span>, <span class="token-type">char</span> <span class="token-variable">y</span>) {
+        <span class="token-type">long</span> <span class="token-variable">count</span> = <span class="token-number">0</span>;
+        <span class="token-type">long</span> <span class="token-variable">xSeen</span> = <span class="token-number">0</span>;
+
+        <span class="token-keyword">for</span> (<span class="token-type">int</span> <span class="token-variable">index</span> = <span class="token-number">0</span>; <span class="token-variable">index</span> &lt; <span class="token-variable">text</span>.<span class="token-method">length</span>(); <span class="token-variable">index</span>++) {
+            <span class="token-type">char</span> <span class="token-variable">character</span> = <span class="token-variable">text</span>.<span class="token-method">charAt</span>(<span class="token-variable">index</span>);
+            <span class="token-keyword">if</span> (<span class="token-variable">character</span> == <span class="token-variable">x</span>) {
+                <span class="token-variable">xSeen</span>++;
+            }
+            <span class="token-keyword">if</span> (<span class="token-variable">character</span> == <span class="token-variable">y</span>) {
+                <span class="token-variable">count</span> += <span class="token-variable">xSeen</span>;
+            }
+        }
+        <span class="token-keyword">return</span> <span class="token-variable">count</span>;
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason">
+                    <p><strong>Time:</strong> The loop examines each character exactly once and performs only constant-time comparisons and counter updates per character.</p>
+                    <p><strong>Space:</strong> The solution stores only the running count, the number of <code>x</code> characters seen, the loop index, and the current character. None grows with the input length.</p>
+                </div>
+            </article>
+
+            <article class="problem" id="duplicate-characters" data-source-order="15">
+                <h3>15. Print duplicateCharsInString</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Print every character that occurs more than once, together with its frequency.</div>
+                <div class="examples">
+                    <div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>"Java2Noviiice ,g,lgjouo"</code></p><p><strong>Output:</strong> <code>a---&gt;2, g---&gt;2, i---&gt;3, ,---&gt;2, o---&gt;3, v---&gt;2</code></p></div>
+                    <div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>"programming"</code></p><p><strong>Output:</strong> repeated characters are <code>r</code>, <code>g</code>, and <code>m</code>.</p></div>
+                </div>
+                <p><strong>Approach:</strong> The document counts characters in a <code>HashMap</code>, then prints entries whose value is greater than one.</p>
+                <pre><code class="language-java"><span class="token-keyword">import</span> java.util.<span class="token-type">HashMap</span>;
+<span class="token-keyword">import</span> java.util.<span class="token-type">Map</span>;
+
+<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">DuplicateCharsInString</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">void</span> <span class="token-method">findDuplicateChars</span>(<span class="token-type">String</span> text) {
+        <span class="token-type">Map</span>&lt;<span class="token-type">Character</span>, <span class="token-type">Integer</span>&gt; frequency = <span class="token-keyword">new</span> <span class="token-type">HashMap</span>&lt;&gt;();
+        <span class="token-keyword">for</span> (<span class="token-type">char</span> character : text.<span class="token-method">toCharArray</span>()) {
+            frequency.<span class="token-method">put</span>(character, frequency.<span class="token-method">getOrDefault</span>(character, <span class="token-number">0</span>) + <span class="token-number">1</span>);
+        }
+        frequency.<span class="token-method">forEach</span>((character, count) -&gt; {
+            <span class="token-keyword">if</span> (count &gt; <span class="token-number">1</span>) System.out.<span class="token-method">println</span>(character + <span class="token-string">"---&gt;"</span> + count);
+        });
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(k)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> One pass builds the frequency map and another visits at most k distinct entries, which is O(n) overall.</p><p><strong>Space:</strong> The map holds one counter per distinct character, k; k is at most n.</p></div>
+            </article>
+
+            <article class="problem" id="max-number-rearranged" data-source-order="16">
+                <h3>16. MaxNumRearraged make largest number</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Arrange values to make the largest number.</div>
+                <div class="examples">
+                    <div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>nums = [3, 30, 34, 5, 9]</code></p><p><strong>Output:</strong> <code>9534330</code></p></div>
+                    <div class="example"><strong>Example 2</strong><p><strong>Input used by the source snippet:</strong> <code>["3", "9497", "37"]</code></p><p><strong>Output:</strong> characters printed in descending sort order.</p></div>
+                </div>
+                <p><strong>Approach in the document:</strong> Convert the displayed string array to characters, sort the characters, and print from the end. This preserves the source method. It is a character-sort demonstration, so it does not implement the concatenation comparator required to guarantee Example 1.</p>
+                <pre><code class="language-java"><span class="token-keyword">import</span> java.util.<span class="token-type">Arrays</span>;
+
+<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">MaxNumRearraged</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-keyword">void</span> <span class="token-method">main</span>(<span class="token-type">String</span>[] args) {
+        <span class="token-type">String</span>[] values = {<span class="token-string">"3"</span>, <span class="token-string">"9497"</span>, <span class="token-string">"37"</span>};
+        <span class="token-type">char</span>[] characters = <span class="token-type">Arrays</span>.<span class="token-method">toString</span>(values)
+                .<span class="token-method">replaceAll</span>(<span class="token-string">"[{},]+"</span>, <span class="token-string">""</span>).<span class="token-method">toCharArray</span>();
+        <span class="token-type">Arrays</span>.<span class="token-method">sort</span>(characters);
+        <span class="token-keyword">for</span> (<span class="token-type">int</span> index = characters.length - <span class="token-number">1</span>; index &gt;= <span class="token-number">0</span>; index--) System.out.<span class="token-method">print</span>(characters[index]);
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(c log c)</span><span><strong>Space</strong>O(c)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> Sorting c characters dominates the method at O(c log c).</p><p><strong>Space:</strong> Converting the displayed values to a character array creates storage proportional to c.</p></div>
+            </article>
+
+            <article class="problem" id="array-rotation" data-source-order="17">
+                <h3>17. Shift array elements left/right Rotate</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Rotate an array by <code>d</code> positions.</div>
+                <div class="examples">
+                    <div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>[1, 2, 3, 4, 5], d = 2</code></p><p><strong>Output (left rotation):</strong> <code>[3, 4, 5, 1, 2]</code></p></div>
+                    <div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>[1, 2, 3, 4, 5], d = 1</code></p><p><strong>Output (right rotation):</strong> <code>[5, 1, 2, 3, 4]</code></p></div>
+                </div>
+                <p><strong>Approach 1:</strong> The scanner-based source code puts each arriving value at <code>(i + n - d) % n</code>, producing the documented left rotation.</p>
+                <pre><code class="language-java"><span class="token-keyword">for</span> (<span class="token-type">int</span> index = <span class="token-number">0</span>; index &lt; size; index++) {
+    rotated[(index + size - shifts) % size] = scanner.<span class="token-method">nextInt</span>(); <span class="token-comment">// left rotation</span>
+    <span class="token-comment">// rotated[(index + size + shifts) % size] = scanner.nextInt(); // right rotation</span>
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(n)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> Each of n input elements is placed once.</p><p><strong>Space:</strong> The source creates a separate result array with n positions.</p></div>
+                <p><strong>Approach 2:</strong> The document also shows this helper, which reads from the shifted index into a new result array.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-keyword">void</span> <span class="token-method">shiftLeftRight</span>(<span class="token-type">int</span>[] values, <span class="token-type">int</span> shifts) {
+    <span class="token-type">int</span> size = values.length;
+    <span class="token-type">int</span>[] result = <span class="token-keyword">new</span> <span class="token-type">int</span>[size];
+    <span class="token-keyword">for</span> (<span class="token-type">int</span> index = <span class="token-number">0</span>; index &lt; size; index++) result[index] = values[(index + size - shifts) % size];
+    <span class="token-keyword">for</span> (<span class="token-type">int</span> value : result) System.out.<span class="token-method">print</span>(value + <span class="token-string">", "</span>);
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(n)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> It visits every position once to construct and once to print the result; this remains O(n).</p><p><strong>Space:</strong> The <code>result</code> array has one entry per input entry.</p></div>
+            </article>
+
+            <article class="problem" id="staircase" data-source-order="18">
+                <h3>18. Staircase</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Print a right-aligned staircase of <code>#</code> characters with height <code>n</code>.</div>
+                <div class="examples">
+                    <div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>5</code></p><p><strong>Output:</strong> <code>    # /   ## /  ### / #### / #####</code> (each slash denotes a new line).</p></div>
+                    <div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>3</code></p><p><strong>Output:</strong> <code>  # / ## / ###</code> (each slash denotes a new line).</p></div>
+                </div>
+                <figure class="source-visual">
+                    <img src="images/image66.png" alt="Right-aligned staircase pattern with five rows">
+                    <figcaption>Source visual: a staircase of height 5.</figcaption>
+                </figure>
+                <p><strong>Approach:</strong> For each row, the source creates <code>n - i</code> spaces and <code>i</code> hash characters.</p>
+                <pre><code class="language-java"><span class="token-keyword">for</span> (<span class="token-type">int</span> row = <span class="token-number">1</span>; row &lt;= height; row++) {
+    System.out.<span class="token-method">println</span>(
+        <span class="token-keyword">new</span> <span class="token-type">String</span>(<span class="token-keyword">new</span> <span class="token-type">char</span>[height - row]).<span class="token-method">replace</span>(<span class="token-string">"\0"</span>, <span class="token-string">" "</span>)
+        + <span class="token-keyword">new</span> <span class="token-type">String</span>(<span class="token-keyword">new</span> <span class="token-type">char</span>[row]).<span class="token-method">replace</span>(<span class="token-string">"\0"</span>, <span class="token-string">"#"</span>)
+    );
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n²)</span><span><strong>Space</strong>O(n)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> Across n rows, n characters are formed and printed per row, yielding n × n output work.</p><p><strong>Space:</strong> The largest temporary character array/string for a row contains n characters.</p></div>
+            </article>
+
+            <article class="problem" id="binary-search-source" data-source-order="19">
+                <h3>19. Binary Search</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Find a target’s index in a sorted integer array, or return <code>-1</code>.</div>
+                <div class="examples">
+                    <div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>nums = [-1, 0, 3, 5, 9, 12], target = 9</code></p><p><strong>Output:</strong> <code>4</code></p></div>
+                    <div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>nums = [-1, 0, 3, 5, 9, 12], target = 2</code></p><p><strong>Output:</strong> <code>-1</code></p></div>
+                </div>
+                <p><strong>Approach:</strong> The document’s iterative binary search compares against the middle and discards one half of the remaining sorted range.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-type">int</span> <span class="token-method">search</span>(<span class="token-type">int</span>[] numbers, <span class="token-type">int</span> target) {
+    <span class="token-type">int</span> start = <span class="token-number">0</span>, end = numbers.length - <span class="token-number">1</span>;
+    <span class="token-keyword">while</span> (start &lt;= end) {
+        <span class="token-type">int</span> middle = start + (end - start) / <span class="token-number">2</span>;
+        <span class="token-keyword">if</span> (numbers[middle] == target) <span class="token-keyword">return</span> middle;
+        <span class="token-keyword">if</span> (numbers[middle] &gt; target) end = middle - <span class="token-number">1</span>;
+        <span class="token-keyword">else</span> start = middle + <span class="token-number">1</span>;
+    }
+    <span class="token-keyword">return</span> -<span class="token-number">1</span>;
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(log n)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> Each comparison removes roughly half of the remaining candidate range.</p><p><strong>Space:</strong> The loop maintains only three integer positions and does not allocate input-sized storage.</p></div>
+            </article>
+
+            <article class="problem" id="pangram" data-source-order="20">
+                <h3>20. Panagram or not</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Return whether a sentence contains every English lowercase letter.</div>
+                <div class="examples">
+                    <div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>"thequickbrownfoxjumpsoverthelazydog"</code></p><p><strong>Output:</strong> <code>true</code></p></div>
+                    <div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>"leetcode"</code></p><p><strong>Output:</strong> <code>false</code></p></div>
+                </div>
+                <p><strong>Approach:</strong> The source puts each character into a <code>HashSet</code> and tests whether the set has 26 distinct letters.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-type">boolean</span> <span class="token-method">checkIfPangram</span>(<span class="token-type">String</span> sentence) {
+    <span class="token-type">Set</span>&lt;<span class="token-type">Character</span>&gt; letters = <span class="token-keyword">new</span> <span class="token-type">HashSet</span>&lt;&gt;();
+    <span class="token-keyword">for</span> (<span class="token-type">char</span> character : sentence.<span class="token-method">toCharArray</span>()) letters.<span class="token-method">add</span>(character);
+    <span class="token-keyword">return</span> letters.<span class="token-method">size</span>() == <span class="token-number">26</span>;
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> Every character is inspected once for insertion into the set.</p><p><strong>Space:</strong> For the stated English lowercase alphabet, the set can contain at most 26 entries, a fixed constant.</p></div>
+            </article>
+
+            <article class="problem" id="count-letters">
+                <h3>2. Count Letters in a String</h3>
+                <div class="problem-summary">
+                    <strong>Problem:</strong> Count alphabetic characters only. Ignore spaces, punctuation, and digits.
+                </div>
+                <div class="examples">
+                    <div class="example">
+                        <strong>Example 1</strong>
+                        <p><strong>Input:</strong> <code>"today is thursday, tomorrow is friday"</code></p>
+                        <p><strong>Output:</strong> <code>31</code></p>
+                    </div>
+                    <div class="example">
+                        <strong>Example 2</strong>
+                        <p><strong>Input:</strong> <code>"Java 21!"</code></p>
+                        <p><strong>Output:</strong> <code>4</code></p>
+                    </div>
+                </div>
+                <p><strong>Approach:</strong> Visit each character once and count it only when <code>Character.isLetter</code> is true.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">CharacterCount</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">int</span> <span class="token-method">countLetters</span>(<span class="token-type">String</span> <span class="token-variable">text</span>) {
+        <span class="token-type">int</span> <span class="token-variable">count</span> = <span class="token-number">0</span>;
+        <span class="token-keyword">for</span> (<span class="token-type">int</span> <span class="token-variable">index</span> = <span class="token-number">0</span>; <span class="token-variable">index</span> &lt; <span class="token-variable">text</span>.<span class="token-method">length</span>(); <span class="token-variable">index</span>++) {
+            <span class="token-type">char</span> <span class="token-variable">character</span> = <span class="token-variable">text</span>.<span class="token-method">charAt</span>(<span class="token-variable">index</span>);
+            <span class="token-keyword">if</span> (<span class="token-type">Character</span>.<span class="token-method">isLetter</span>(<span class="token-variable">character</span>)) {
+                <span class="token-variable">count</span>++;
+            }
+        }
+        <span class="token-keyword">return</span> <span class="token-variable">count</span>;
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason">
+                    <p><strong>Time:</strong> The loop reads every character once and <code>Character.isLetter</code> is a constant-time check for each character.</p>
+                    <p><strong>Space:</strong> The implementation uses only a counter, an index, and the current character. It does not build a new string, array, or collection.</p>
+                </div>
+            </article>
+
+            <article class="problem" id="two-sum">
+                <h3>3. Two Sum</h3>
+                <div class="problem-summary">
+                    <strong>Problem:</strong> Given an integer array and a target, return the indices of two different values whose sum equals the target. Assume exactly one answer exists.
+                </div>
+                <div class="examples">
+                    <div class="example">
+                        <strong>Example 1</strong>
+                        <p><strong>Input:</strong> <code>[2, 7, 11, 15]</code>, target <code>9</code></p>
+                        <p><strong>Output:</strong> <code>[0, 1]</code></p>
+                    </div>
+                    <div class="example">
+                        <strong>Example 2</strong>
+                        <p><strong>Input:</strong> <code>[3, 2, 4]</code>, target <code>6</code></p>
+                        <p><strong>Output:</strong> <code>[1, 2]</code></p>
+                    </div>
+                </div>
+                <p><strong>Approach:</strong> Store each visited value and its index in a hash map. Before inserting the current value, look for its complement.</p>
+                <pre><code class="language-java"><span class="token-keyword">import</span> java.util.<span class="token-type">HashMap</span>;
+<span class="token-keyword">import</span> java.util.<span class="token-type">Map</span>;
+
+<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">TwoSum</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">int</span>[] <span class="token-method">twoSum</span>(<span class="token-type">int</span>[] <span class="token-variable">numbers</span>, <span class="token-type">int</span> <span class="token-variable">target</span>) {
+        <span class="token-type">Map</span>&lt;<span class="token-type">Integer</span>, <span class="token-type">Integer</span>&gt; <span class="token-variable">indexByValue</span> = <span class="token-keyword">new</span> <span class="token-type">HashMap</span>&lt;&gt;();
+
+        <span class="token-keyword">for</span> (<span class="token-type">int</span> <span class="token-variable">index</span> = <span class="token-number">0</span>; <span class="token-variable">index</span> &lt; <span class="token-variable">numbers</span>.length; <span class="token-variable">index</span>++) {
+            <span class="token-type">int</span> <span class="token-variable">complement</span> = <span class="token-variable">target</span> - <span class="token-variable">numbers</span>[<span class="token-variable">index</span>];
+            <span class="token-keyword">if</span> (<span class="token-variable">indexByValue</span>.<span class="token-method">containsKey</span>(<span class="token-variable">complement</span>)) {
+                <span class="token-keyword">return</span> <span class="token-keyword">new</span> <span class="token-type">int</span>[] {<span class="token-variable">indexByValue</span>.<span class="token-method">get</span>(<span class="token-variable">complement</span>), <span class="token-variable">index</span>};
+            }
+            <span class="token-variable">indexByValue</span>.<span class="token-method">put</span>(<span class="token-variable">numbers</span>[<span class="token-variable">index</span>], <span class="token-variable">index</span>);
+        }
+        <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">IllegalArgumentException</span>(<span class="token-string">"No valid pair exists"</span>);
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(n)</span></div>
+                <div class="complexity-reason">
+                    <p><strong>Time:</strong> There is one pass through the array. Hash-map lookup and insertion are O(1) on average, so n iterations produce expected O(n) time.</p>
+                    <p><strong>Space:</strong> Before the matching pair is found, the hash map can store one value-to-index entry for every array element, requiring O(n) extra space.</p>
+                </div>
+            </article>
+
+            <article class="problem" id="valid-palindrome">
+                <h3>4. Valid Palindrome</h3>
+                <div class="problem-summary">
+                    <strong>Problem:</strong> Return whether a string is a palindrome after ignoring non-alphanumeric characters and letter case.
+                </div>
+                <div class="examples">
+                    <div class="example">
+                        <strong>Example 1</strong>
+                        <p><strong>Input:</strong> <code>"A man, a plan, a canal: Panama"</code></p>
+                        <p><strong>Output:</strong> <code>true</code></p>
+                    </div>
+                    <div class="example">
+                        <strong>Example 2</strong>
+                        <p><strong>Input:</strong> <code>"race a car"</code></p>
+                        <p><strong>Output:</strong> <code>false</code></p>
+                    </div>
+                </div>
+                <p><strong>Approach:</strong> Use a pointer at each end. Skip non-alphanumeric characters and compare the remaining characters without regard to case.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">ValidPalindrome</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">boolean</span> <span class="token-method">isPalindrome</span>(<span class="token-type">String</span> <span class="token-variable">text</span>) {
+        <span class="token-type">int</span> <span class="token-variable">left</span> = <span class="token-number">0</span>;
+        <span class="token-type">int</span> <span class="token-variable">right</span> = <span class="token-variable">text</span>.<span class="token-method">length</span>() - <span class="token-number">1</span>;
+
+        <span class="token-keyword">while</span> (<span class="token-variable">left</span> &lt; <span class="token-variable">right</span>) {
+            <span class="token-keyword">while</span> (<span class="token-variable">left</span> &lt; <span class="token-variable">right</span> &amp;&amp; !<span class="token-type">Character</span>.<span class="token-method">isLetterOrDigit</span>(<span class="token-variable">text</span>.<span class="token-method">charAt</span>(<span class="token-variable">left</span>))) {
+                <span class="token-variable">left</span>++;
+            }
+            <span class="token-keyword">while</span> (<span class="token-variable">left</span> &lt; <span class="token-variable">right</span> &amp;&amp; !<span class="token-type">Character</span>.<span class="token-method">isLetterOrDigit</span>(<span class="token-variable">text</span>.<span class="token-method">charAt</span>(<span class="token-variable">right</span>))) {
+                <span class="token-variable">right</span>--;
+            }
+            <span class="token-keyword">if</span> (<span class="token-type">Character</span>.<span class="token-method">toLowerCase</span>(<span class="token-variable">text</span>.<span class="token-method">charAt</span>(<span class="token-variable">left</span>))
+                    != <span class="token-type">Character</span>.<span class="token-method">toLowerCase</span>(<span class="token-variable">text</span>.<span class="token-method">charAt</span>(<span class="token-variable">right</span>))) {
+                <span class="token-keyword">return</span> <span class="token-keyword">false</span>;
+            }
+            <span class="token-variable">left</span>++;
+            <span class="token-variable">right</span>--;
+        }
+        <span class="token-keyword">return</span> <span class="token-keyword">true</span>;
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason">
+                    <p><strong>Time:</strong> The left and right pointers only move toward each other. Together they inspect no more than n characters, including characters skipped as punctuation.</p>
+                    <p><strong>Space:</strong> The solution stores only the two indices and temporary character values. It does not create a normalized copy of the string.</p>
+                </div>
+            </article>
+
+            <article class="problem" id="binary-search">
+                <h3>5. Binary Search</h3>
+                <div class="problem-summary">
+                    <strong>Problem:</strong> Return the index of a target in a sorted integer array, or <code>-1</code> if the target is absent.
+                </div>
+                <div class="examples">
+                    <div class="example">
+                        <strong>Example 1</strong>
+                        <p><strong>Input:</strong> <code>[-1, 0, 3, 5, 9, 12]</code>, target <code>9</code></p>
+                        <p><strong>Output:</strong> <code>4</code></p>
+                    </div>
+                    <div class="example">
+                        <strong>Example 2</strong>
+                        <p><strong>Input:</strong> <code>[-1, 0, 3, 5, 9, 12]</code>, target <code>2</code></p>
+                        <p><strong>Output:</strong> <code>-1</code></p>
+                    </div>
+                </div>
+                <p><strong>Approach:</strong> Compare the target with the middle value and discard half of the remaining range on each iteration.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">BinarySearch</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">int</span> <span class="token-method">search</span>(<span class="token-type">int</span>[] <span class="token-variable">numbers</span>, <span class="token-type">int</span> <span class="token-variable">target</span>) {
+        <span class="token-type">int</span> <span class="token-variable">left</span> = <span class="token-number">0</span>;
+        <span class="token-type">int</span> <span class="token-variable">right</span> = <span class="token-variable">numbers</span>.length - <span class="token-number">1</span>;
+
+        <span class="token-keyword">while</span> (<span class="token-variable">left</span> &lt;= <span class="token-variable">right</span>) {
+            <span class="token-type">int</span> <span class="token-variable">middle</span> = <span class="token-variable">left</span> + (<span class="token-variable">right</span> - <span class="token-variable">left</span>) / <span class="token-number">2</span>;
+            <span class="token-keyword">if</span> (<span class="token-variable">numbers</span>[<span class="token-variable">middle</span>] == <span class="token-variable">target</span>) {
+                <span class="token-keyword">return</span> <span class="token-variable">middle</span>;
+            }
+            <span class="token-keyword">if</span> (<span class="token-variable">numbers</span>[<span class="token-variable">middle</span>] &lt; <span class="token-variable">target</span>) {
+                <span class="token-variable">left</span> = <span class="token-variable">middle</span> + <span class="token-number">1</span>;
+            } <span class="token-keyword">else</span> {
+                <span class="token-variable">right</span> = <span class="token-variable">middle</span> - <span class="token-number">1</span>;
+            }
+        }
+        <span class="token-keyword">return</span> -<span class="token-number">1</span>;
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(log n)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason">
+                    <p><strong>Time:</strong> Each comparison discards approximately half of the remaining sorted range. Repeated halving needs at most log₂(n) iterations.</p>
+                    <p><strong>Space:</strong> The iterative search stores only the left, right, and middle indices; it makes no recursive calls and allocates no data structure.</p>
+                </div>
+            </article>
+
+            <article class="problem" id="move-zeroes">
+                <h3>6. Move Zeroes</h3>
+                <div class="problem-summary">
+                    <strong>Problem:</strong> Move all zeroes to the end of an array while preserving the order of the non-zero values.
+                </div>
+                <div class="examples">
+                    <div class="example">
+                        <strong>Example 1</strong>
+                        <p><strong>Input:</strong> <code>[0, 1, 0, 3, 12]</code></p>
+                        <p><strong>Output:</strong> <code>[1, 3, 12, 0, 0]</code></p>
+                    </div>
+                    <div class="example">
+                        <strong>Example 2</strong>
+                        <p><strong>Input:</strong> <code>[0, 0, 1]</code></p>
+                        <p><strong>Output:</strong> <code>[1, 0, 0]</code></p>
+                    </div>
+                </div>
+                <p><strong>Approach:</strong> Write each non-zero value from left to right. Fill the unused positions with zeroes after the scan.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">MoveZeroes</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-keyword">void</span> <span class="token-method">moveZeroes</span>(<span class="token-type">int</span>[] <span class="token-variable">numbers</span>) {
+        <span class="token-type">int</span> <span class="token-variable">write</span> = <span class="token-number">0</span>;
+        <span class="token-keyword">for</span> (<span class="token-type">int</span> <span class="token-variable">number</span> : <span class="token-variable">numbers</span>) {
+            <span class="token-keyword">if</span> (<span class="token-variable">number</span> != <span class="token-number">0</span>) {
+                <span class="token-variable">numbers</span>[<span class="token-variable">write</span>++] = <span class="token-variable">number</span>;
+            }
+        }
+        <span class="token-keyword">while</span> (<span class="token-variable">write</span> &lt; <span class="token-variable">numbers</span>.length) {
+            <span class="token-variable">numbers</span>[<span class="token-variable">write</span>++] = <span class="token-number">0</span>;
+        }
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason">
+                    <p><strong>Time:</strong> The first loop visits every value once and the second fills at most n positions, for no more than 2n operations. Constants are ignored in Big-O notation, so this is O(n).</p>
+                    <p><strong>Space:</strong> Both passes update the original array in place and use only the write index plus the enhanced-for loop variable.</p>
+                </div>
+            </article>
+
+            <article class="problem" id="count-distinct-characters" data-source-order="1">
+                <h3>1. Find Number of Characters in String, Only Characters</h3>
+                <div class="problem-summary">
+                    <strong>Problem:</strong> Return the number of distinct characters in a string. Characters are compared exactly as written, so uppercase and lowercase letters are different.
+                </div>
+                <div class="examples">
+                    <div class="example">
+                        <strong>Example 1</strong>
+                        <p><strong>Input:</strong> <code>"programming"</code></p>
+                        <p><strong>Output:</strong> <code>8</code></p>
+                    </div>
+                    <div class="example">
+                        <strong>Example 2</strong>
+                        <p><strong>Input:</strong> <code>"aabbcc"</code></p>
+                        <p><strong>Output:</strong> <code>3</code></p>
+                    </div>
+                </div>
+                <p><strong>Approach:</strong> Insert every character into a set. A set retains one copy of each value, so its size is the answer after the scan.</p>
+                <pre><code class="language-java"><span class="token-keyword">import</span> java.util.<span class="token-type">HashSet</span>;
+<span class="token-keyword">import</span> java.util.<span class="token-type">Set</span>;
+
+<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">DistinctCharacters</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">int</span> <span class="token-method">countDistinct</span>(<span class="token-type">String</span> <span class="token-variable">text</span>) {
+        <span class="token-type">Set</span>&lt;<span class="token-type">Character</span>&gt; <span class="token-variable">seen</span> = <span class="token-keyword">new</span> <span class="token-type">HashSet</span>&lt;&gt;();
+
+        <span class="token-keyword">for</span> (<span class="token-type">int</span> <span class="token-variable">index</span> = <span class="token-number">0</span>; <span class="token-variable">index</span> &lt; <span class="token-variable">text</span>.<span class="token-method">length</span>(); <span class="token-variable">index</span>++) {
+            <span class="token-variable">seen</span>.<span class="token-method">add</span>(<span class="token-variable">text</span>.<span class="token-method">charAt</span>(<span class="token-variable">index</span>));
+        }
+        <span class="token-keyword">return</span> <span class="token-variable">seen</span>.<span class="token-method">size</span>();
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(k)</span></div>
+                <div class="complexity-reason">
+                    <p><strong>Time:</strong> The loop reads each of the n characters once, and each set insertion takes expected O(1) time.</p>
+                    <p><strong>Space:</strong> The set stores one entry for each distinct character. If there are k distinct characters, the additional memory is O(k), which is at most O(n).</p>
+                </div>
+            </article>
+
+            <article class="problem" id="n-repeated-element" data-source-order="2">
+                <h3>2. N-Repeated Element in a Size 2N Array</h3>
+                <div class="problem-summary">
+                    <strong>Problem:</strong> In an array of size <code>2N</code>, one element occurs exactly <code>N</code> times and every other element occurs once. Return the repeated element.
+                </div>
+                <div class="examples">
+                    <div class="example">
+                        <strong>Example 1</strong>
+                        <p><strong>Input:</strong> <code>[1, 2, 3, 3]</code></p>
+                        <p><strong>Output:</strong> <code>3</code></p>
+                    </div>
+                    <div class="example">
+                        <strong>Example 2</strong>
+                        <p><strong>Input:</strong> <code>[2, 1, 2, 5, 3, 2]</code></p>
+                        <p><strong>Output:</strong> <code>2</code></p>
+                    </div>
+                </div>
+                <p><strong>Approach:</strong> Insert values into a set as they are scanned. The first value that the set already contains is the required repeated element.</p>
+                <pre><code class="language-java"><span class="token-keyword">import</span> java.util.<span class="token-type">HashSet</span>;
+<span class="token-keyword">import</span> java.util.<span class="token-type">Set</span>;
+
+<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">RepeatedElement</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">int</span> <span class="token-method">repeatedNTimes</span>(<span class="token-type">int</span>[] <span class="token-variable">numbers</span>) {
+        <span class="token-type">Set</span>&lt;<span class="token-type">Integer</span>&gt; <span class="token-variable">seen</span> = <span class="token-keyword">new</span> <span class="token-type">HashSet</span>&lt;&gt;();
+
+        <span class="token-keyword">for</span> (<span class="token-type">int</span> <span class="token-variable">number</span> : <span class="token-variable">numbers</span>) {
+            <span class="token-keyword">if</span> (!<span class="token-variable">seen</span>.<span class="token-method">add</span>(<span class="token-variable">number</span>)) {
+                <span class="token-keyword">return</span> <span class="token-variable">number</span>;
+            }
+        }
+        <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">IllegalArgumentException</span>(<span class="token-string">"Input does not contain a repeated element"</span>);
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(n)</span></div>
+                <div class="complexity-reason">
+                    <p><strong>Time:</strong> Each value is processed once. Set insertion and membership checking through <code>add</code> are expected O(1), giving expected O(n) total time.</p>
+                    <p><strong>Space:</strong> Before the duplicate is encountered, the set can contain a linear number of values from the input, so auxiliary space is O(n).</p>
+                </div>
+            </article>
+
+            <article class="problem" id="last-four-characters" data-source-order="3">
+                <h3>3. Print the Last Four Characters of a String</h3>
+                <div class="problem-summary">
+                    <strong>Problem:</strong> Return the last four characters of a string. If the string has four or fewer characters, return the entire string.
+                </div>
+                <div class="examples">
+                    <div class="example">
+                        <strong>Example 1</strong>
+                        <p><strong>Input:</strong> <code>"leetcode"</code></p>
+                        <p><strong>Output:</strong> <code>"code"</code></p>
+                    </div>
+                    <div class="example">
+                        <strong>Example 2</strong>
+                        <p><strong>Input:</strong> <code>"cat"</code></p>
+                        <p><strong>Output:</strong> <code>"cat"</code></p>
+                    </div>
+                </div>
+                <p><strong>Approach:</strong> Calculate the start index as <code>length - 4</code>. The <code>Math.max</code> call keeps that index at zero for short strings.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">LastFourCharacters</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">String</span> <span class="token-method">lastFour</span>(<span class="token-type">String</span> <span class="token-variable">text</span>) {
+        <span class="token-type">int</span> <span class="token-variable">start</span> = <span class="token-type">Math</span>.<span class="token-method">max</span>(<span class="token-number">0</span>, <span class="token-variable">text</span>.<span class="token-method">length</span>() - <span class="token-number">4</span>);
+        <span class="token-keyword">return</span> <span class="token-variable">text</span>.<span class="token-method">substring</span>(<span class="token-variable">start</span>);
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(1)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason">
+                    <p><strong>Time:</strong> The method calculates one index and returns at most four characters, so the work is bounded by a fixed constant regardless of input length.</p>
+                    <p><strong>Space:</strong> The returned substring has a maximum length of four, and the method uses only one additional index. Both are constant-sized.</p>
+                </div>
+            </article>
+
+            <article class="problem" id="reverse-string" data-source-order="4">
+                <h3>4. String Reverse</h3>
+                <div class="problem-summary">
+                    <strong>Problem:</strong> Return a new string whose characters appear in reverse order.
+                </div>
+                <div class="examples">
+                    <div class="example">
+                        <strong>Example 1</strong>
+                        <p><strong>Input:</strong> <code>"Burger"</code></p>
+                        <p><strong>Output:</strong> <code>"regruB"</code></p>
+                    </div>
+                    <div class="example">
+                        <strong>Example 2</strong>
+                        <p><strong>Input:</strong> <code>"Java"</code></p>
+                        <p><strong>Output:</strong> <code>"avaJ"</code></p>
+                    </div>
+                </div>
+                <p><strong>Approach:</strong> Copy the characters to an array, then swap matching positions from the left and right ends until the pointers meet.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">ReverseString</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">String</span> <span class="token-method">reverse</span>(<span class="token-type">String</span> <span class="token-variable">text</span>) {
+        <span class="token-type">char</span>[] <span class="token-variable">characters</span> = <span class="token-variable">text</span>.<span class="token-method">toCharArray</span>();
+        <span class="token-type">int</span> <span class="token-variable">left</span> = <span class="token-number">0</span>;
+        <span class="token-type">int</span> <span class="token-variable">right</span> = <span class="token-variable">characters</span>.length - <span class="token-number">1</span>;
+
+        <span class="token-keyword">while</span> (<span class="token-variable">left</span> &lt; <span class="token-variable">right</span>) {
+            <span class="token-type">char</span> <span class="token-variable">temporary</span> = <span class="token-variable">characters</span>[<span class="token-variable">left</span>];
+            <span class="token-variable">characters</span>[<span class="token-variable">left</span>++] = <span class="token-variable">characters</span>[<span class="token-variable">right</span>];
+            <span class="token-variable">characters</span>[<span class="token-variable">right</span>--] = <span class="token-variable">temporary</span>;
+        }
+        <span class="token-keyword">return</span> <span class="token-keyword">new</span> <span class="token-type">String</span>(<span class="token-variable">characters</span>);
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(n)</span></div>
+                <div class="complexity-reason">
+                    <p><strong>Time:</strong> Creating the character array touches n characters, and the two pointers perform at most n / 2 swaps. Both operations are linear.</p>
+                    <p><strong>Space:</strong> The character array contains one slot for every character in the source string, so the new working storage grows linearly with n.</p>
+                </div>
+            </article>
+
+            <article class="problem" id="reverse-integer" data-source-order="5">
+                <h3>5. Java Program to Reverse Number</h3>
+                <div class="problem-summary">
+                    <strong>Problem:</strong> Reverse the decimal digits of a signed 32-bit integer. Return <code>0</code> if the reversed value would overflow the signed 32-bit range.
+                </div>
+                <div class="examples">
+                    <div class="example">
+                        <strong>Example 1</strong>
+                        <p><strong>Input:</strong> <code>123</code></p>
+                        <p><strong>Output:</strong> <code>321</code></p>
+                    </div>
+                    <div class="example">
+                        <strong>Example 2</strong>
+                        <p><strong>Input:</strong> <code>-123</code></p>
+                        <p><strong>Output:</strong> <code>-321</code></p>
+                    </div>
+                </div>
+                <p><strong>Approach:</strong> Repeatedly remove the last digit with modulo <code>10</code> and append it to the result. Check the result before multiplying by <code>10</code> so an overflow is detected without using a wider numeric type.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">ReverseInteger</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">int</span> <span class="token-method">reverse</span>(<span class="token-type">int</span> <span class="token-variable">number</span>) {
+        <span class="token-type">int</span> <span class="token-variable">reversed</span> = <span class="token-number">0</span>;
+
+        <span class="token-keyword">while</span> (<span class="token-variable">number</span> != <span class="token-number">0</span>) {
+            <span class="token-type">int</span> <span class="token-variable">digit</span> = <span class="token-variable">number</span> % <span class="token-number">10</span>;
+            <span class="token-variable">number</span> /= <span class="token-number">10</span>;
+
+            <span class="token-keyword">if</span> (<span class="token-variable">reversed</span> &gt; <span class="token-type">Integer</span>.MAX_VALUE / <span class="token-number">10</span>
+                    || (<span class="token-variable">reversed</span> == <span class="token-type">Integer</span>.MAX_VALUE / <span class="token-number">10</span> &amp;&amp; <span class="token-variable">digit</span> &gt; <span class="token-number">7</span>)) {
+                <span class="token-keyword">return</span> <span class="token-number">0</span>;
+            }
+            <span class="token-keyword">if</span> (<span class="token-variable">reversed</span> &lt; <span class="token-type">Integer</span>.MIN_VALUE / <span class="token-number">10</span>
+                    || (<span class="token-variable">reversed</span> == <span class="token-type">Integer</span>.MIN_VALUE / <span class="token-number">10</span> &amp;&amp; <span class="token-variable">digit</span> &lt; -<span class="token-number">8</span>)) {
+                <span class="token-keyword">return</span> <span class="token-number">0</span>;
+            }
+            <span class="token-variable">reversed</span> = <span class="token-variable">reversed</span> * <span class="token-number">10</span> + <span class="token-variable">digit</span>;
+        }
+        <span class="token-keyword">return</span> <span class="token-variable">reversed</span>;
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(d), or O(1) for a 32-bit integer</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason">
+                    <p><strong>Time:</strong> Each loop removes one decimal digit. For an input with d digits, the loop runs d times, so the general cost is O(d), equivalent to O(log |n|). For the fixed 32-bit input required here, d is bounded by 10, making it O(1).</p>
+                    <p><strong>Space:</strong> The solution keeps only the current number, the reversed value, and one digit. It does not create a string, array, or other collection.</p>
+                </div>
+            </article>
+
+            <article class="problem" id="factorial" data-source-order="6">
+                <h3>6. Java Program to Find Factorial</h3>
+                <div class="problem-summary">
+                    <strong>Problem:</strong> Return <code>n!</code>, the product of all positive integers from <code>1</code> through <code>n</code>. This version accepts values from <code>0</code> through <code>20</code>, which fit in a Java <code>long</code>.
+                </div>
+                <div class="examples">
+                    <div class="example">
+                        <strong>Example 1</strong>
+                        <p><strong>Input:</strong> <code>5</code></p>
+                        <p><strong>Output:</strong> <code>120</code></p>
+                    </div>
+                    <div class="example">
+                        <strong>Example 2</strong>
+                        <p><strong>Input:</strong> <code>0</code></p>
+                        <p><strong>Output:</strong> <code>1</code></p>
+                    </div>
+                </div>
+                <p><strong>Approach:</strong> Start with <code>1</code> and multiply it by every integer from <code>2</code> through <code>n</code>. The value for <code>0!</code> is defined as <code>1</code>.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">Factorial</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">long</span> <span class="token-method">factorial</span>(<span class="token-type">int</span> <span class="token-variable">n</span>) {
+        <span class="token-keyword">if</span> (<span class="token-variable">n</span> &lt; <span class="token-number">0</span> || <span class="token-variable">n</span> &gt; <span class="token-number">20</span>) {
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">IllegalArgumentException</span>(<span class="token-string">"n must be between 0 and 20"</span>);
+        }
+
+        <span class="token-type">long</span> <span class="token-variable">result</span> = <span class="token-number">1</span>;
+        <span class="token-keyword">for</span> (<span class="token-type">int</span> <span class="token-variable">value</span> = <span class="token-number">2</span>; <span class="token-variable">value</span> &lt;= <span class="token-variable">n</span>; <span class="token-variable">value</span>++) {
+            <span class="token-variable">result</span> *= <span class="token-variable">value</span>;
+        }
+        <span class="token-keyword">return</span> <span class="token-variable">result</span>;
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason">
+                    <p><strong>Time:</strong> The loop performs one multiplication for each integer from 2 through n, which is linear in n.</p>
+                    <p><strong>Space:</strong> The method uses a fixed number of numeric variables regardless of n and performs no allocation proportional to the input.</p>
+                </div>
+            </article>
+
+            <article class="problem" id="all-unique-characters" data-source-order="8">
+                <h3>8. To Determine If a String Has All Unique Characters</h3>
+                <div class="problem-summary">
+                    <strong>Problem:</strong> Return <code>true</code> when no character occurs more than once in a string; otherwise return <code>false</code>. Matching is case-sensitive.
+                </div>
+                <div class="examples">
+                    <div class="example">
+                        <strong>Example 1</strong>
+                        <p><strong>Input:</strong> <code>"kite"</code></p>
+                        <p><strong>Output:</strong> <code>true</code></p>
+                    </div>
+                    <div class="example">
+                        <strong>Example 2</strong>
+                        <p><strong>Input:</strong> <code>"bubble"</code></p>
+                        <p><strong>Output:</strong> <code>false</code></p>
+                    </div>
+                </div>
+                <p><strong>Approach:</strong> Add each character to a set. If <code>add</code> returns <code>false</code>, that character was already present and the string is not unique.</p>
+                <pre><code class="language-java"><span class="token-keyword">import</span> java.util.<span class="token-type">HashSet</span>;
+<span class="token-keyword">import</span> java.util.<span class="token-type">Set</span>;
+
+<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">UniqueCharacters</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">boolean</span> <span class="token-method">hasAllUniqueCharacters</span>(<span class="token-type">String</span> <span class="token-variable">text</span>) {
+        <span class="token-type">Set</span>&lt;<span class="token-type">Character</span>&gt; <span class="token-variable">seen</span> = <span class="token-keyword">new</span> <span class="token-type">HashSet</span>&lt;&gt;();
+
+        <span class="token-keyword">for</span> (<span class="token-type">int</span> <span class="token-variable">index</span> = <span class="token-number">0</span>; <span class="token-variable">index</span> &lt; <span class="token-variable">text</span>.<span class="token-method">length</span>(); <span class="token-variable">index</span>++) {
+            <span class="token-keyword">if</span> (!<span class="token-variable">seen</span>.<span class="token-method">add</span>(<span class="token-variable">text</span>.<span class="token-method">charAt</span>(<span class="token-variable">index</span>))) {
+                <span class="token-keyword">return</span> <span class="token-keyword">false</span>;
+            }
+        }
+        <span class="token-keyword">return</span> <span class="token-keyword">true</span>;
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(n)</span></div>
+                <div class="complexity-reason">
+                    <p><strong>Time:</strong> The scan stops at the first duplicate or processes all n characters. Each set insertion is expected O(1), so total expected time is O(n).</p>
+                    <p><strong>Space:</strong> In the all-unique case, the set contains every character in the input, so it can require O(n) additional entries.</p>
+                </div>
+            </article>
+
+            <article class="problem" id="fibonacci-series" data-source-order="9">
+                <h3>9. Fibonacci Series</h3>
+                <div class="problem-summary">
+                    <strong>Problem:</strong> Return the first <code>n</code> values of the Fibonacci sequence, starting with <code>0, 1</code>. This version supports up to 93 values, which fit in Java <code>long</code>.
+                </div>
+                <div class="examples">
+                    <div class="example">
+                        <strong>Example 1</strong>
+                        <p><strong>Input:</strong> <code>7</code></p>
+                        <p><strong>Output:</strong> <code>[0, 1, 1, 2, 3, 5, 8]</code></p>
+                    </div>
+                    <div class="example">
+                        <strong>Example 2</strong>
+                        <p><strong>Input:</strong> <code>1</code></p>
+                        <p><strong>Output:</strong> <code>[0]</code></p>
+                    </div>
+                </div>
+                <p><strong>Approach:</strong> Store each generated term in the result array. Keep the previous two values so the next value can be calculated by addition.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">FibonacciSeries</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">long</span>[] <span class="token-method">firstTerms</span>(<span class="token-type">int</span> <span class="token-variable">n</span>) {
+        <span class="token-keyword">if</span> (<span class="token-variable">n</span> &lt; <span class="token-number">1</span> || <span class="token-variable">n</span> &gt; <span class="token-number">93</span>) {
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">IllegalArgumentException</span>(<span class="token-string">"n must be between 1 and 93"</span>);
+        }
+
+        <span class="token-type">long</span>[] <span class="token-variable">terms</span> = <span class="token-keyword">new</span> <span class="token-type">long</span>[<span class="token-variable">n</span>];
+        <span class="token-variable">terms</span>[<span class="token-number">0</span>] = <span class="token-number">0</span>;
+        <span class="token-keyword">if</span> (<span class="token-variable">n</span> == <span class="token-number">1</span>) {
+            <span class="token-keyword">return</span> <span class="token-variable">terms</span>;
+        }
+
+        <span class="token-variable">terms</span>[<span class="token-number">1</span>] = <span class="token-number">1</span>;
+        <span class="token-keyword">for</span> (<span class="token-type">int</span> <span class="token-variable">index</span> = <span class="token-number">2</span>; <span class="token-variable">index</span> &lt; <span class="token-variable">n</span>; <span class="token-variable">index</span>++) {
+            <span class="token-variable">terms</span>[<span class="token-variable">index</span>] = <span class="token-variable">terms</span>[<span class="token-variable">index</span> - <span class="token-number">1</span>] + <span class="token-variable">terms</span>[<span class="token-variable">index</span> - <span class="token-number">2</span>];
+        }
+        <span class="token-keyword">return</span> <span class="token-variable">terms</span>;
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(n)</span></div>
+                <div class="complexity-reason">
+                    <p><strong>Time:</strong> After the two initial values, the loop calculates each remaining term once. The number of additions is proportional to n.</p>
+                    <p><strong>Space:</strong> The returned array contains n values. Apart from that output array, the method uses only a constant amount of additional memory.</p>
+                </div>
+            </article>
+
+            <article class="problem" id="sort-zero-one" data-source-order="10">
+                <h3>10. Array [0,1] in Sorted Order</h3>
+                <div class="problem-summary">
+                    <strong>Problem:</strong> Sort an array containing only <code>0</code> and <code>1</code> in place, placing every <code>0</code> before every <code>1</code>.
+                </div>
+                <div class="examples">
+                    <div class="example">
+                        <strong>Example 1</strong>
+                        <p><strong>Input:</strong> <code>[0, 1, 0, 1, 0, 0, 1, 1, 1, 0]</code></p>
+                        <p><strong>Output:</strong> <code>[0, 0, 0, 0, 0, 1, 1, 1, 1, 1]</code></p>
+                    </div>
+                    <div class="example">
+                        <strong>Example 2</strong>
+                        <p><strong>Input:</strong> <code>[1, 0, 1, 1, 0]</code></p>
+                        <p><strong>Output:</strong> <code>[0, 0, 1, 1, 1]</code></p>
+                    </div>
+                </div>
+                <p><strong>Approach:</strong> Keep a boundary for the next <code>0</code>. Scan the array once; when a <code>0</code> is found, swap it into that boundary and advance the boundary.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">SortZeroOne</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-keyword">void</span> <span class="token-method">sort</span>(<span class="token-type">int</span>[] <span class="token-variable">numbers</span>) {
+        <span class="token-type">int</span> <span class="token-variable">nextZero</span> = <span class="token-number">0</span>;
+
+        <span class="token-keyword">for</span> (<span class="token-type">int</span> <span class="token-variable">index</span> = <span class="token-number">0</span>; <span class="token-variable">index</span> &lt; <span class="token-variable">numbers</span>.length; <span class="token-variable">index</span>++) {
+            <span class="token-keyword">if</span> (<span class="token-variable">numbers</span>[<span class="token-variable">index</span>] == <span class="token-number">0</span>) {
+                <span class="token-type">int</span> <span class="token-variable">temporary</span> = <span class="token-variable">numbers</span>[<span class="token-variable">nextZero</span>];
+                <span class="token-variable">numbers</span>[<span class="token-variable">nextZero</span>++] = <span class="token-variable">numbers</span>[<span class="token-variable">index</span>];
+                <span class="token-variable">numbers</span>[<span class="token-variable">index</span>] = <span class="token-variable">temporary</span>;
+            }
+        }
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason">
+                    <p><strong>Time:</strong> The array is scanned once. Every iteration does a constant number of comparisons and, at most, one swap.</p>
+                    <p><strong>Space:</strong> The algorithm modifies the input array and uses only the boundary index and one temporary value for swapping.</p>
+                </div>
+            </article>
+
+            <article class="problem" id="print-prime-numbers" data-source-order="7">
+                <h3>7. Print Prime Numbers</h3>
+                <div class="problem-summary">
+                    <strong>Problem:</strong> Return all prime numbers from <code>2</code> through a supplied upper limit. A prime number has exactly two positive factors: <code>1</code> and itself.
+                </div>
+                <div class="examples">
+                    <div class="example">
+                        <strong>Example 1</strong>
+                        <p><strong>Input:</strong> <code>100</code></p>
+                        <p><strong>Output:</strong> <code>[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]</code></p>
+                    </div>
+                    <div class="example">
+                        <strong>Example 2</strong>
+                        <p><strong>Input:</strong> <code>10</code></p>
+                        <p><strong>Output:</strong> <code>[2, 3, 5, 7]</code></p>
+                    </div>
+                </div>
+                <p><strong>Approach:</strong> This keeps the original document’s trial-division approach: for every candidate, test divisors only up to its square root. If no divisor divides it evenly, add it to the result.</p>
+                <pre><code class="language-java"><span class="token-keyword">import</span> java.util.<span class="token-type">ArrayList</span>;
+<span class="token-keyword">import</span> java.util.<span class="token-type">List</span>;
+
+<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">PrimeNumbers</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">List</span>&lt;<span class="token-type">Integer</span>&gt; <span class="token-method">primesUpTo</span>(<span class="token-type">int</span> <span class="token-variable">limit</span>) {
+        <span class="token-type">List</span>&lt;<span class="token-type">Integer</span>&gt; <span class="token-variable">primes</span> = <span class="token-keyword">new</span> <span class="token-type">ArrayList</span>&lt;&gt;();
+
+        <span class="token-keyword">for</span> (<span class="token-type">int</span> <span class="token-variable">candidate</span> = <span class="token-number">2</span>; <span class="token-variable">candidate</span> &lt;= <span class="token-variable">limit</span>; <span class="token-variable">candidate</span>++) {
+            <span class="token-type">boolean</span> <span class="token-variable">isPrime</span> = <span class="token-keyword">true</span>;
+
+            <span class="token-keyword">for</span> (<span class="token-type">int</span> <span class="token-variable">divisor</span> = <span class="token-number">2</span>; <span class="token-variable">divisor</span> &lt;= <span class="token-type">Math</span>.<span class="token-method">sqrt</span>(<span class="token-variable">candidate</span>); <span class="token-variable">divisor</span>++) {
+                <span class="token-keyword">if</span> (<span class="token-variable">candidate</span> % <span class="token-variable">divisor</span> == <span class="token-number">0</span>) {
+                    <span class="token-variable">isPrime</span> = <span class="token-keyword">false</span>;
+                    <span class="token-keyword">break</span>;
+                }
+            }
+            <span class="token-keyword">if</span> (<span class="token-variable">isPrime</span>) {
+                <span class="token-variable">primes</span>.<span class="token-method">add</span>(<span class="token-variable">candidate</span>);
+            }
+        }
+        <span class="token-keyword">return</span> <span class="token-variable">primes</span>;
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n√n)</span><span><strong>Space</strong>O(p)</span></div>
+                <div class="complexity-reason">
+                    <p><strong>Time:</strong> For each candidate up to n, the inner loop can test divisors up to √candidate. In the worst case, this gives O(n√n) work.</p>
+                    <p><strong>Space:</strong> The returned list stores p prime numbers up to n. Apart from that output, the method uses a fixed number of variables.</p>
+                </div>
+            </article>
+
+            <article class="problem" id="sort-colors" data-source-order="11">
+                <h3>11. Sort [0,1,2] Array Elements (Sort Colors)</h3>
+                <div class="problem-summary">
+                    <strong>Problem:</strong> Sort an array containing only <code>0</code>, <code>1</code>, and <code>2</code> in place without using a library sort.
+                </div>
+                <div class="examples">
+                    <div class="example">
+                        <strong>Example 1</strong>
+                        <p><strong>Input:</strong> <code>[0, 1, 2, 0, 1, 2]</code></p>
+                        <p><strong>Output:</strong> <code>[0, 0, 1, 1, 2, 2]</code></p>
+                    </div>
+                    <div class="example">
+                        <strong>Example 2</strong>
+                        <p><strong>Input:</strong> <code>[0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1]</code></p>
+                        <p><strong>Output:</strong> <code>[0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2]</code></p>
+                    </div>
+                </div>
+                <p><strong>Approach:</strong> This retains the original three-pointer solution. The left boundary holds the next position for <code>0</code>, the current pointer scans values, and the right boundary holds the next position for <code>2</code>.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">SortColors</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-keyword">void</span> <span class="token-method">sortColors</span>(<span class="token-type">int</span>[] <span class="token-variable">numbers</span>) {
+        <span class="token-type">int</span> <span class="token-variable">current</span> = <span class="token-number">0</span>;
+        <span class="token-type">int</span> <span class="token-variable">nextZero</span> = <span class="token-number">0</span>;
+        <span class="token-type">int</span> <span class="token-variable">nextTwo</span> = <span class="token-variable">numbers</span>.length - <span class="token-number">1</span>;
+
+        <span class="token-keyword">while</span> (<span class="token-variable">current</span> &lt;= <span class="token-variable">nextTwo</span>) {
+            <span class="token-keyword">if</span> (<span class="token-variable">numbers</span>[<span class="token-variable">current</span>] == <span class="token-number">1</span>) {
+                <span class="token-variable">current</span>++;
+            } <span class="token-keyword">else</span> <span class="token-keyword">if</span> (<span class="token-variable">numbers</span>[<span class="token-variable">current</span>] == <span class="token-number">0</span>) {
+                <span class="token-type">int</span> <span class="token-variable">temporary</span> = <span class="token-variable">numbers</span>[<span class="token-variable">current</span>];
+                <span class="token-variable">numbers</span>[<span class="token-variable">current</span>++] = <span class="token-variable">numbers</span>[<span class="token-variable">nextZero</span>];
+                <span class="token-variable">numbers</span>[<span class="token-variable">nextZero</span>++] = <span class="token-variable">temporary</span>;
+            } <span class="token-keyword">else</span> {
+                <span class="token-type">int</span> <span class="token-variable">temporary</span> = <span class="token-variable">numbers</span>[<span class="token-variable">current</span>];
+                <span class="token-variable">numbers</span>[<span class="token-variable">current</span>] = <span class="token-variable">numbers</span>[<span class="token-variable">nextTwo</span>];
+                <span class="token-variable">numbers</span>[<span class="token-variable">nextTwo</span>--] = <span class="token-variable">temporary</span>;
+            }
+        }
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason">
+                    <p><strong>Time:</strong> The current pointer advances for 0s and 1s, while the right boundary moves left for 2s. Each value is handled a constant number of times, so the total work is O(n).</p>
+                    <p><strong>Space:</strong> The algorithm rearranges the given array and uses only three indices and one temporary value for swapping.</p>
+                </div>
+            </article>
+
+            <article class="problem" id="first-unique-character" data-source-order="12">
+                <h3>12. First Unique Character in a String</h3>
+                <div class="problem-summary">
+                    <strong>Problem:</strong> Return the index of the first non-repeating character in a string. Return <code>-1</code> if every character repeats.
+                </div>
+                <div class="examples">
+                    <div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>"leetcode"</code></p><p><strong>Output:</strong> <code>0</code></p></div>
+                    <div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>"loveleetcode"</code></p><p><strong>Output:</strong> <code>2</code></p></div>
+                </div>
+                <p><strong>Approach 1:</strong> The original solution first counts each character in a hash map, then scans the string again to find the first character with count <code>1</code>.</p>
+                <pre><code class="language-java"><span class="token-keyword">import</span> java.util.<span class="token-type">HashMap</span>;
+<span class="token-keyword">import</span> java.util.<span class="token-type">Map</span>;
+
+<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">FirstUniqueCharacter</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">int</span> <span class="token-method">firstUniqChar</span>(<span class="token-type">String</span> <span class="token-variable">text</span>) {
+        <span class="token-type">Map</span>&lt;<span class="token-type">Character</span>, <span class="token-type">Integer</span>&gt; <span class="token-variable">frequency</span> = <span class="token-keyword">new</span> <span class="token-type">HashMap</span>&lt;&gt;();
+
+        <span class="token-keyword">for</span> (<span class="token-type">char</span> <span class="token-variable">character</span> : <span class="token-variable">text</span>.<span class="token-method">toCharArray</span>()) {
+            <span class="token-variable">frequency</span>.<span class="token-method">put</span>(<span class="token-variable">character</span>, <span class="token-variable">frequency</span>.<span class="token-method">getOrDefault</span>(<span class="token-variable">character</span>, <span class="token-number">0</span>) + <span class="token-number">1</span>);
+        }
+        <span class="token-keyword">for</span> (<span class="token-type">int</span> <span class="token-variable">index</span> = <span class="token-number">0</span>; <span class="token-variable">index</span> &lt; <span class="token-variable">text</span>.<span class="token-method">length</span>(); <span class="token-variable">index</span>++) {
+            <span class="token-keyword">if</span> (<span class="token-variable">frequency</span>.<span class="token-method">get</span>(<span class="token-variable">text</span>.<span class="token-method">charAt</span>(<span class="token-variable">index</span>)) == <span class="token-number">1</span>) {
+                <span class="token-keyword">return</span> <span class="token-variable">index</span>;
+            }
+        }
+        <span class="token-keyword">return</span> -<span class="token-number">1</span>;
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(n)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> The source approach makes two linear scans of the string; 2n remains O(n).</p><p><strong>Space:</strong> The hash map can contain one entry for every distinct character, up to O(n) entries.</p></div>
+                <p><strong>Approach 2:</strong> The document also includes an optimized lowercase-English-letter solution that checks each letter’s first and last index.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">FirstUniqueCharacterOptimized</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">int</span> <span class="token-method">firstUniqChar</span>(<span class="token-type">String</span> <span class="token-variable">text</span>) {
+        <span class="token-type">int</span> <span class="token-variable">answer</span> = <span class="token-type">Integer</span>.MAX_VALUE;
+        <span class="token-keyword">for</span> (<span class="token-type">char</span> <span class="token-variable">character</span> = <span class="token-string">'a'</span>; <span class="token-variable">character</span> &lt;= <span class="token-string">'z'</span>; <span class="token-variable">character</span>++) {
+            <span class="token-type">int</span> <span class="token-variable">index</span> = <span class="token-variable">text</span>.<span class="token-method">indexOf</span>(<span class="token-variable">character</span>);
+            <span class="token-keyword">if</span> (<span class="token-variable">index</span> != -<span class="token-number">1</span> &amp;&amp; <span class="token-variable">index</span> == <span class="token-variable">text</span>.<span class="token-method">lastIndexOf</span>(<span class="token-variable">character</span>)) {
+                <span class="token-variable">answer</span> = <span class="token-type">Math</span>.<span class="token-method">min</span>(<span class="token-variable">answer</span>, <span class="token-variable">index</span>);
+            }
+        }
+        <span class="token-keyword">return</span> <span class="token-variable">answer</span> == <span class="token-type">Integer</span>.MAX_VALUE ? -<span class="token-number">1</span> : <span class="token-variable">answer</span>;
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> It performs a constant 26 iterations, and each <code>indexOf</code>/<code>lastIndexOf</code> call can scan the string, giving O(26n), simplified to O(n).</p><p><strong>Space:</strong> It stores only two integer variables and one loop character; the alphabet is fixed rather than input-sized.</p></div>
+            </article>
+
+            <article class="problem" id="three-sum" data-source-order="13">
+                <h3>13. 3Sum</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Return all unique triplets in an integer array whose values sum to <code>0</code>.</div>
+                <div class="examples">
+                    <div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>[-1, 0, 1, 2, -1, -4]</code></p><p><strong>Output:</strong> <code>[[-1, -1, 2], [-1, 0, 1]]</code></p></div>
+                    <div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>[0, 1, 1]</code></p><p><strong>Output:</strong> <code>[]</code></p></div>
+                </div>
+                <p><strong>Approach:</strong> This keeps the source method: sort the array, fix one position, then use two pointers for the remaining range. A set prevents duplicate triplets in the result.</p>
+                <pre><code class="language-java"><span class="token-keyword">import</span> java.util.<span class="token-type">ArrayList</span>;
+<span class="token-keyword">import</span> java.util.<span class="token-type">Arrays</span>;
+<span class="token-keyword">import</span> java.util.<span class="token-type">HashSet</span>;
+<span class="token-keyword">import</span> java.util.<span class="token-type">List</span>;
+<span class="token-keyword">import</span> java.util.<span class="token-type">Set</span>;
+
+<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">ThreeSum</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">List</span>&lt;<span class="token-type">List</span>&lt;<span class="token-type">Integer</span>&gt;&gt; <span class="token-method">threeSum</span>(<span class="token-type">int</span>[] <span class="token-variable">numbers</span>) {
+        <span class="token-type">Set</span>&lt;<span class="token-type">List</span>&lt;<span class="token-type">Integer</span>&gt;&gt; <span class="token-variable">triplets</span> = <span class="token-keyword">new</span> <span class="token-type">HashSet</span>&lt;&gt;();
+        <span class="token-keyword">if</span> (<span class="token-variable">numbers</span>.length == <span class="token-number">0</span>) <span class="token-keyword">return</span> <span class="token-keyword">new</span> <span class="token-type">ArrayList</span>&lt;&gt;(<span class="token-variable">triplets</span>);
+
+        <span class="token-type">Arrays</span>.<span class="token-method">sort</span>(<span class="token-variable">numbers</span>);
+        <span class="token-keyword">for</span> (<span class="token-type">int</span> <span class="token-variable">first</span> = <span class="token-number">0</span>; <span class="token-variable">first</span> &lt; <span class="token-variable">numbers</span>.length - <span class="token-number">2</span>; <span class="token-variable">first</span>++) {
+            <span class="token-type">int</span> <span class="token-variable">left</span> = <span class="token-variable">first</span> + <span class="token-number">1</span>;
+            <span class="token-type">int</span> <span class="token-variable">right</span> = <span class="token-variable">numbers</span>.length - <span class="token-number">1</span>;
+            <span class="token-keyword">while</span> (<span class="token-variable">left</span> &lt; <span class="token-variable">right</span>) {
+                <span class="token-type">int</span> <span class="token-variable">sum</span> = <span class="token-variable">numbers</span>[<span class="token-variable">first</span>] + <span class="token-variable">numbers</span>[<span class="token-variable">left</span>] + <span class="token-variable">numbers</span>[<span class="token-variable">right</span>];
+                <span class="token-keyword">if</span> (<span class="token-variable">sum</span> == <span class="token-number">0</span>) <span class="token-variable">triplets</span>.<span class="token-method">add</span>(<span class="token-type">Arrays</span>.<span class="token-method">asList</span>(<span class="token-variable">numbers</span>[<span class="token-variable">first</span>], <span class="token-variable">numbers</span>[<span class="token-variable">left</span>++], <span class="token-variable">numbers</span>[<span class="token-variable">right</span>--]));
+                <span class="token-keyword">else</span> <span class="token-keyword">if</span> (<span class="token-variable">sum</span> &gt; <span class="token-number">0</span>) <span class="token-variable">right</span>--;
+                <span class="token-keyword">else</span> <span class="token-variable">left</span>++;
+            }
+        }
+        <span class="token-keyword">return</span> <span class="token-keyword">new</span> <span class="token-type">ArrayList</span>&lt;&gt;(<span class="token-variable">triplets</span>);
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n²)</span><span><strong>Space</strong>O(m)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> Sorting costs O(n log n); the outer loop and two-pointer scan together cost O(n²), which dominates.</p><p><strong>Space:</strong> The set stores m unique output triplets. Apart from the result set and the sorting implementation, the pointer variables use constant space.</p></div>
+            </article>
+
+            <article class="problem" id="valid-palindrome-ii" data-source-order="14">
+                <h3>14. Valid Palindrome II</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Return <code>true</code> if a string can become a palindrome after deleting at most one character.</div>
+                <div class="examples">
+                    <div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>"aba"</code></p><p><strong>Output:</strong> <code>true</code></p></div>
+                    <div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>"abca"</code></p><p><strong>Output:</strong> <code>true</code>; delete <code>'c'</code>.</p></div>
+                </div>
+                <p><strong>Approach:</strong> This preserves the document’s solution. Move two pointers inward until a mismatch occurs; then test the two permitted deletions by checking either remaining substring for a palindrome.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">ValidPalindromeTwo</span> {
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">boolean</span> <span class="token-method">validPalindrome</span>(<span class="token-type">String</span> <span class="token-variable">text</span>) {
+        <span class="token-type">int</span> <span class="token-variable">left</span> = <span class="token-number">0</span>;
+        <span class="token-type">int</span> <span class="token-variable">right</span> = <span class="token-variable">text</span>.<span class="token-method">length</span>() - <span class="token-number">1</span>;
+
+        <span class="token-keyword">while</span> (<span class="token-variable">left</span> &lt; <span class="token-variable">right</span>) {
+            <span class="token-keyword">if</span> (<span class="token-variable">text</span>.<span class="token-method">charAt</span>(<span class="token-variable">left</span>) != <span class="token-variable">text</span>.<span class="token-method">charAt</span>(<span class="token-variable">right</span>)) {
+                <span class="token-keyword">return</span> <span class="token-method">isPalindrome</span>(<span class="token-variable">text</span>, <span class="token-variable">left</span> + <span class="token-number">1</span>, <span class="token-variable">right</span>)
+                    || <span class="token-method">isPalindrome</span>(<span class="token-variable">text</span>, <span class="token-variable">left</span>, <span class="token-variable">right</span> - <span class="token-number">1</span>);
+            }
+            <span class="token-variable">left</span>++;
+            <span class="token-variable">right</span>--;
+        }
+        <span class="token-keyword">return</span> <span class="token-keyword">true</span>;
+    }
+
+    <span class="token-keyword">private</span> <span class="token-keyword">static</span> <span class="token-type">boolean</span> <span class="token-method">isPalindrome</span>(<span class="token-type">String</span> <span class="token-variable">text</span>, <span class="token-type">int</span> <span class="token-variable">left</span>, <span class="token-type">int</span> <span class="token-variable">right</span>) {
+        <span class="token-keyword">while</span> (<span class="token-variable">left</span> &lt; <span class="token-variable">right</span>) {
+            <span class="token-keyword">if</span> (<span class="token-variable">text</span>.<span class="token-method">charAt</span>(<span class="token-variable">left</span>++) != <span class="token-variable">text</span>.<span class="token-method">charAt</span>(<span class="token-variable">right</span>--)) {
+                <span class="token-keyword">return</span> <span class="token-keyword">false</span>;
+            }
+        }
+        <span class="token-keyword">return</span> <span class="token-keyword">true</span>;
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> The initial scan reaches the first mismatch once. At most two palindrome checks each scan the remaining range, so the total remains O(n).</p><p><strong>Space:</strong> The method uses indices only and checks substrings by range rather than creating substring objects.</p></div>
+            </article>
+
+            <article class="problem" id="array-minimum-maximum" data-source-order="21">
+                <h3>21. Maximum/minimum of an array</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Find an array’s minimum and maximum values.</div>
+                <div class="examples">
+                    <div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>[3, 5, 4, 1, 9]</code></p><p><strong>Output:</strong> <code>Minimum element is: 1; Maximum element is: 9</code></p></div>
+                    <div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>[22, 14, 8, 17, 35, 3]</code></p><p><strong>Output:</strong> <code>Minimum element is: 3; Maximum element is: 35</code></p></div>
+                </div>
+                <p><strong>Approach 1:</strong> The first source method starts both values from the first element, then updates each while scanning the remainder.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">String</span> <span class="token-method">minMax</span>(<span class="token-type">int</span>[] values) {
+    <span class="token-keyword">if</span> (values == <span class="token-keyword">null</span> || values.length &lt; <span class="token-number">2</span>) <span class="token-keyword">return</span> <span class="token-string">"Array must have at least two elements"</span>;
+    <span class="token-type">int</span> minimum = values[<span class="token-number">0</span>], maximum = values[<span class="token-number">0</span>];
+    <span class="token-keyword">for</span> (<span class="token-type">int</span> index = <span class="token-number">1</span>; index &lt; values.length; index++) {
+        <span class="token-keyword">if</span> (values[index] &lt; minimum) minimum = values[index];
+        <span class="token-keyword">if</span> (values[index] &gt; maximum) maximum = values[index];
+    }
+    <span class="token-keyword">return</span> <span class="token-string">"Min: "</span> + minimum + <span class="token-string">" &amp; Max: "</span> + maximum;
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> The method examines each array value once after initialization.</p><p><strong>Space:</strong> It keeps only two result variables and a loop index.</p></div>
+                <p><strong>Approach 2:</strong> The document also compares values in pairs before updating the current minimum and maximum.</p>
+                <pre><code class="language-java"><span class="token-comment">// Initialize min/max from the first two values, then process remaining pairs.</span>
+<span class="token-keyword">for</span> (<span class="token-type">int</span> index = <span class="token-number">2</span>; index &lt; size - <span class="token-number">1</span>; index += <span class="token-number">2</span>) {
+    <span class="token-keyword">if</span> (values[index] &lt; values[index + <span class="token-number">1</span>]) {
+        minimum = <span class="token-type">Math</span>.<span class="token-method">min</span>(minimum, values[index]);
+        maximum = <span class="token-type">Math</span>.<span class="token-method">max</span>(maximum, values[index + <span class="token-number">1</span>]);
+    } <span class="token-keyword">else</span> {
+        minimum = <span class="token-type">Math</span>.<span class="token-method">min</span>(minimum, values[index + <span class="token-number">1</span>]);
+        maximum = <span class="token-type">Math</span>.<span class="token-method">max</span>(maximum, values[index]);
+    }
+}
+<span class="token-keyword">if</span> (size % <span class="token-number">2</span> != <span class="token-number">0</span>) {
+    minimum = <span class="token-type">Math</span>.<span class="token-method">min</span>(minimum, values[size - <span class="token-number">1</span>]);
+    maximum = <span class="token-type">Math</span>.<span class="token-method">max</span>(maximum, values[size - <span class="token-number">1</span>]);
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> Pairing reduces comparisons but still covers every element, so the growth rate remains O(n).</p><p><strong>Space:</strong> Pair comparisons reuse the same minimum and maximum variables.</p></div>
+            </article>
+
+            <article class="problem" id="rotated-array-pivot" data-source-order="22">
+                <h3>22. Pivot of Sorted Rotated Array</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Find the smallest value (the rotation pivot) in a sorted, rotated array.</div>
+                <div class="examples">
+                    <div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>[30, 40, 50, 10, 20]</code></p><p><strong>Output:</strong> <code>10</code></p></div>
+                    <div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>[3, 4, 5, 1, 2]</code></p><p><strong>Output:</strong> <code>1</code></p></div>
+                </div>
+                <p><strong>Approach:</strong> The source uses binary search: if the middle is smaller than the right end, the pivot is at middle or to its left; otherwise it is to the right.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">int</span> <span class="token-method">findPivot</span>(<span class="token-type">int</span>[] values) {
+    <span class="token-type">int</span> low = <span class="token-number">0</span>, high = values.length - <span class="token-number">1</span>;
+    <span class="token-keyword">while</span> (low &lt; high) {
+        <span class="token-type">int</span> middle = (low + high) / <span class="token-number">2</span>;
+        <span class="token-keyword">if</span> (values[middle] &lt; values[high]) high = middle;
+        <span class="token-keyword">else</span> low = middle + <span class="token-number">1</span>;
+    }
+    <span class="token-keyword">return</span> values[high];
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(log n)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> Every iteration halves the interval that can contain the pivot.</p><p><strong>Space:</strong> It uses only low, high, and middle indices.</p></div>
+            </article>
+
+            <article class="problem" id="running-sum" data-source-order="23">
+                <h3>23. Running Sum of 1D Array</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Replace every position with the sum of itself and all previous positions.</div>
+                <div class="examples">
+                    <div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>[1, 2, 3, 4]</code></p><p><strong>Output:</strong> <code>[1, 3, 6, 10]</code></p></div>
+                    <div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>[1, 1, 1, 1, 1]</code></p><p><strong>Output:</strong> <code>[1, 2, 3, 4, 5]</code></p></div>
+                </div>
+                <p><strong>Approach:</strong> The source maintains an accumulated sum and writes it back into the same array through a separate output index.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">int</span>[] <span class="token-method">runningSum2</span>(<span class="token-type">int</span>[] numbers) {
+    <span class="token-type">int</span> sum = <span class="token-number">0</span>, outputIndex = <span class="token-number">0</span>;
+    <span class="token-keyword">for</span> (<span class="token-type">int</span> index = <span class="token-number">0</span>; index &lt; numbers.length; index++) {
+        sum += numbers[index];
+        numbers[outputIndex++] = sum;
+    }
+    <span class="token-keyword">return</span> numbers;
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> There is one constant-time update for each element.</p><p><strong>Space:</strong> The source modifies the supplied array and uses only two integer counters.</p></div>
+            </article>
+
+            <article class="problem" id="pivot-index" data-source-order="24">
+                <h3>24. Find pivoting Index</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Return the index where the sum strictly to the left equals the sum strictly to the right.</div>
+                <div class="examples">
+                    <div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>[1, 7, 3, 6, 5, 6]</code></p><p><strong>Output:</strong> <code>3</code></p></div>
+                    <div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>[1, 2, 3]</code></p><p><strong>Output:</strong> <code>-1</code></p></div>
+                </div>
+                <p><strong>Approach:</strong> The document first finds the total sum. While scanning, it removes the current value from the right sum, compares it to the left sum, then adds the value to the left sum.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-type">int</span> <span class="token-method">pivotIndex</span>(<span class="token-type">int</span>[] numbers) {
+    <span class="token-type">int</span> total = <span class="token-number">0</span>;
+    <span class="token-keyword">for</span> (<span class="token-type">int</span> number : numbers) total += number;
+    <span class="token-type">int</span> leftSum = <span class="token-number">0</span>, rightSum = total;
+    <span class="token-keyword">for</span> (<span class="token-type">int</span> index = <span class="token-number">0</span>; index &lt; numbers.length; index++) {
+        rightSum -= numbers[index];
+        <span class="token-keyword">if</span> (leftSum == rightSum) <span class="token-keyword">return</span> index;
+        leftSum += numbers[index];
+    }
+    <span class="token-keyword">return</span> -<span class="token-number">1</span>;
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> The total-sum pass and pivot-search pass are both linear; 2n is O(n).</p><p><strong>Space:</strong> It tracks sums and indices without allocating another array or map.</p></div>
+            </article>
+
+            <article class="problem" id="valid-palindrome-source" data-source-order="25">
+                <h3>25. Valid Palindrome</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Determine whether text is a palindrome after ignoring non-alphanumeric characters and letter case.</div>
+                <div class="examples">
+                    <div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>"A man, a plan, a canal: Panama"</code></p><p><strong>Output:</strong> <code>true</code></p></div>
+                    <div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>"race a car"</code></p><p><strong>Output:</strong> <code>false</code></p></div>
+                </div>
+                <p><strong>Approach 1:</strong> The source uses two pointers. It skips non-alphanumeric characters and compares the remaining characters case-insensitively.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-type">boolean</span> <span class="token-method">isPalindrome</span>(<span class="token-type">String</span> text) {
+    <span class="token-type">char</span>[] characters = text.<span class="token-method">toCharArray</span>();
+    <span class="token-keyword">for</span> (<span class="token-type">int</span> left = <span class="token-number">0</span>, right = characters.length - <span class="token-number">1</span>; left &lt; right;) {
+        <span class="token-keyword">if</span> (!<span class="token-type">Character</span>.<span class="token-method">isLetterOrDigit</span>(characters[left])) left++;
+        <span class="token-keyword">else</span> <span class="token-keyword">if</span> (!<span class="token-type">Character</span>.<span class="token-method">isLetterOrDigit</span>(characters[right])) right--;
+        <span class="token-keyword">else</span> <span class="token-keyword">if</span> (<span class="token-type">Character</span>.<span class="token-method">toLowerCase</span>(characters[left++]) != <span class="token-type">Character</span>.<span class="token-method">toLowerCase</span>(characters[right--])) <span class="token-keyword">return</span> <span class="token-keyword">false</span>;
+    }
+    <span class="token-keyword">return</span> <span class="token-keyword">true</span>;
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(n)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> Each pointer only moves inward, so every character is inspected at most once.</p><p><strong>Space:</strong> The source first creates a character array copy of the string, which occupies O(n) space.</p></div>
+                <p><strong>Approach 2:</strong> The document also includes a simple exact-character comparison for a single scanner token; unlike Approach 1, it does not skip punctuation or normalize case.</p>
+                <pre><code class="language-java"><span class="token-keyword">boolean</span> palindrome = <span class="token-keyword">true</span>;
+<span class="token-keyword">for</span> (<span class="token-type">int</span> left = <span class="token-number">0</span>, right = input.<span class="token-method">length</span>() - <span class="token-number">1</span>; left &lt;= right; left++, right--) {
+    <span class="token-keyword">if</span> (input.<span class="token-method">charAt</span>(left) != input.<span class="token-method">charAt</span>(right)) palindrome = <span class="token-keyword">false</span>;
+}
+System.out.<span class="token-method">print</span>(palindrome ? <span class="token-string">"Yes"</span> : <span class="token-string">"No"</span>);</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> The loop compares mirrored positions until the pointers meet.</p><p><strong>Space:</strong> It accesses the existing string directly and stores only flags and indices.</p></div>
+            </article>
+
+            <article class="problem" id="valid-anagram" data-source-order="26">
+                <h3>26. 242. Valid Anagram</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Return whether <code>t</code> is an anagram of <code>s</code>.</div>
+                <div class="examples">
+                    <div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>s = "anagram", t = "nagaram"</code></p><p><strong>Output:</strong> <code>true</code></p></div>
+                    <div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>s = "rat", t = "car"</code></p><p><strong>Output:</strong> <code>false</code></p></div>
+                </div>
+                <p><strong>Approach:</strong> The source uses a 26-slot counter: increment for each character in the first word and decrement for the same position in the second.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-type">boolean</span> <span class="token-method">isAnagram</span>(<span class="token-type">String</span> first, <span class="token-type">String</span> second) {
+    <span class="token-keyword">if</span> (first == <span class="token-keyword">null</span> || second == <span class="token-keyword">null</span> || first.<span class="token-method">length</span>() != second.<span class="token-method">length</span>()) <span class="token-keyword">return</span> <span class="token-keyword">false</span>;
+    <span class="token-type">int</span>[] counts = <span class="token-keyword">new</span> <span class="token-type">int</span>[<span class="token-number">26</span>];
+    <span class="token-keyword">for</span> (<span class="token-type">int</span> index = <span class="token-number">0</span>; index &lt; first.<span class="token-method">length</span>(); index++) {
+        counts[first.<span class="token-method">charAt</span>(index) - <span class="token-string">'a'</span>]++;
+        counts[second.<span class="token-method">charAt</span>(index) - <span class="token-string">'a'</span>]--;
+    }
+    <span class="token-keyword">for</span> (<span class="token-type">int</span> count : counts) <span class="token-keyword">if</span> (count != <span class="token-number">0</span>) <span class="token-keyword">return</span> <span class="token-keyword">false</span>;
+    <span class="token-keyword">return</span> <span class="token-keyword">true</span>;
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> The two strings are traversed together once; checking 26 counters is constant work.</p><p><strong>Space:</strong> The counter always has exactly 26 slots for the lowercase-English constraint.</p></div>
+            </article>
+
+            <article class="problem" id="stream-string-sort" data-source-order="27">
+                <h3>27. Sort Java String using Stream API</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Sort the characters of a string, or sort a list of strings, with Java streams.</div>
+                <div class="examples">
+                    <div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>"hello world"</code></p><p><strong>Output:</strong> <code>" dehllloorw"</code></p></div>
+                    <div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>["apple", "banana", "cherry", "date", "elderberry"]</code></p><p><strong>Output:</strong> the same alphabetically sorted list.</p></div>
+                </div>
+                <p><strong>Approach 1:</strong> The source splits the text into one-character strings, applies stream sorting, then joins them.</p>
+                <pre><code class="language-java"><span class="token-keyword">import</span> java.util.stream.*;
+
+<span class="token-type">String</span> input = <span class="token-string">"hello world"</span>;
+<span class="token-type">String</span> sorted = <span class="token-type">Stream</span>.<span class="token-method">of</span>(input.<span class="token-method">split</span>(<span class="token-string">""</span>))
+        .<span class="token-method">sorted</span>()
+        .<span class="token-method">collect</span>(<span class="token-type">Collectors</span>.<span class="token-method">joining</span>());
+System.out.<span class="token-method">println</span>(<span class="token-string">"Sorted string: "</span> + sorted);</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n log n)</span><span><strong>Space</strong>O(n)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> Sorting n split character elements costs O(n log n).</p><p><strong>Space:</strong> Splitting, stream sorting, and joining hold character-sized intermediate/output data.</p></div>
+                <p><strong>Approach 2:</strong> The second source example streams a list, sorts it in natural (alphabetical) order, and collects it to a new list.</p>
+                <pre><code class="language-java"><span class="token-type">List</span>&lt;<span class="token-type">String</span>&gt; words = <span class="token-type">Arrays</span>.<span class="token-method">asList</span>(<span class="token-string">"apple"</span>, <span class="token-string">"banana"</span>, <span class="token-string">"cherry"</span>, <span class="token-string">"date"</span>, <span class="token-string">"elderberry"</span>);
+<span class="token-type">List</span>&lt;<span class="token-type">String</span>&gt; sortedWords = words.<span class="token-method">stream</span>().<span class="token-method">sorted</span>().<span class="token-method">collect</span>(<span class="token-type">Collectors</span>.<span class="token-method">toList</span>());</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(w log w)</span><span><strong>Space</strong>O(w)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> Sorting w list elements drives the O(w log w) work, excluding the cost of individual string comparisons.</p><p><strong>Space:</strong> Collecting produces a new list containing w references.</p></div>
+            </article>
+
+            <article class="problem" id="rest-assured-deserialization" data-source-order="28">
+                <h3>28. Deserialization in Rest Assured</h3>
+                <div class="problem-summary"><strong>Concept:</strong> Convert a JSON or XML API response into a matching Java object. Serialization is the reverse: Java object to JSON/XML.</div>
+                <div class="examples">
+                    <div class="example"><strong>Example 1</strong><p><strong>Input:</strong> an <code>application/json</code> response from <code>"/api/endpoint"</code>.</p><p><strong>Output:</strong> a <code>MyResponseObject</code> instance.</p></div>
+                    <div class="example"><strong>Example 2</strong><p><strong>Request setup:</strong> send a JSON request object with content type <code>application/json</code>.</p><p><strong>Validation:</strong> the source screenshot checks status <code>200</code>.</p></div>
+                </div>
+                <p><strong>Source workflow:</strong> Add a supported mapper such as Jackson, GSON, or JAXB; set the JSON content type; then map the received response into a Java class whose fields match the payload. The original document supplied these two snippets as screenshots; they are transcribed below.</p>
+                <pre><code class="language-java"><span class="token-type">Response</span> response = <span class="token-method">given</span>()
+        .<span class="token-method">contentType</span>(<span class="token-string">"application/json"</span>)
+        .<span class="token-method">when</span>()
+        .<span class="token-method">get</span>(<span class="token-string">"/api/endpoint"</span>);
+
+<span class="token-type">MyResponseObject</span> responseObject = response.<span class="token-method">as</span>(<span class="token-type">MyResponseObject</span>.<span class="token-keyword">class</span>);</code></pre>
+                <pre><code class="language-java"><span class="token-method">given</span>()
+        .<span class="token-method">contentType</span>(<span class="token-string">"application/json"</span>)
+        .<span class="token-method">body</span>(requestObject)
+        .<span class="token-method">when</span>()
+        .<span class="token-method">post</span>(<span class="token-string">"/api/endpoint"</span>)
+        .<span class="token-method">then</span>()
+        .<span class="token-method">statusCode</span>(<span class="token-number">200</span>);</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(p)</span><span><strong>Space</strong>O(p)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> Mapping a response requires the JSON/XML parser to read p payload fields/bytes.</p><p><strong>Space:</strong> The resulting Java object graph represents the parsed payload, so its size grows with p. Network time is separate from this local mapping cost.</p></div>
+            </article>
+
+            <article class="problem" id="flood-fill" data-source-order="29">
+                <h3>29. Flood Fill</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Recolor the starting pixel and all four-directionally connected pixels of the same original color.</div>
+                <div class="examples">
+                    <div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>image = [[1,1,1],[1,1,0],[1,0,1]], sr = 1, sc = 1, color = 2</code></p><p><strong>Output:</strong> <code>[[2,2,2],[2,2,0],[2,0,1]]</code></p></div>
+                    <div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>image = [[0,0,0],[0,0,0]], sr = 0, sc = 0, color = 0</code></p><p><strong>Output:</strong> unchanged image.</p></div>
+                </div>
+                <figure class="source-visual">
+                    <img src="images/image33.png" alt="Flood Fill grid changing connected cells from 1 to 2">
+                    <figcaption>Source visual: connected cells of the original color are recolored.</figcaption>
+                </figure>
+                <p><strong>Approach:</strong> The source performs recursive depth-first fill. It first exits if the requested color already matches, preventing an infinite revisit cycle.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-type">int</span>[][] <span class="token-method">floodFill</span>(<span class="token-type">int</span>[][] image, <span class="token-type">int</span> startRow, <span class="token-type">int</span> startColumn, <span class="token-type">int</span> color) {
+    <span class="token-keyword">if</span> (image[startRow][startColumn] == color) <span class="token-keyword">return</span> image;
+    <span class="token-method">fill</span>(image, startRow, startColumn, image[startRow][startColumn], color);
+    <span class="token-keyword">return</span> image;
+}
+
+<span class="token-keyword">private</span> <span class="token-keyword">void</span> <span class="token-method">fill</span>(<span class="token-type">int</span>[][] image, <span class="token-type">int</span> row, <span class="token-type">int</span> column, <span class="token-type">int</span> originalColor, <span class="token-type">int</span> newColor) {
+    <span class="token-keyword">if</span> (row &lt; <span class="token-number">0</span> || row &gt;= image.length || column &lt; <span class="token-number">0</span> || column &gt;= image[<span class="token-number">0</span>].length || image[row][column] != originalColor) <span class="token-keyword">return</span>;
+    image[row][column] = newColor;
+    <span class="token-method">fill</span>(image, row + <span class="token-number">1</span>, column, originalColor, newColor);
+    <span class="token-method">fill</span>(image, row - <span class="token-number">1</span>, column, originalColor, newColor);
+    <span class="token-method">fill</span>(image, row, column + <span class="token-number">1</span>, originalColor, newColor);
+    <span class="token-method">fill</span>(image, row, column - <span class="token-number">1</span>, originalColor, newColor);
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(m × n)</span><span><strong>Space</strong>O(m × n)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> In the largest connected region, each of the m × n pixels is recolored and visited once.</p><p><strong>Space:</strong> The recursive call stack can grow to the size of that region in the worst case.</p></div>
+            </article>
+
+            <article class="problem" id="lowest-common-ancestor-bst" data-source-order="30">
+                <h3>30. 235. Lowest Common Ancestor of a Binary Search Tree</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Find the lowest node in a BST that has both specified nodes in its subtree.</div>
+                <div class="examples">
+                    <div class="example"><strong>Example 1</strong><p><strong>Input:</strong> BST <code>[6,2,8,0,4,7,9,null,null,3,5]</code>, <code>p = 2</code>, <code>q = 8</code>.</p><p><strong>Output:</strong> <code>6</code></p></div>
+                    <div class="example"><strong>Example 2</strong><p><strong>Input:</strong> same BST, <code>p = 2</code>, <code>q = 4</code>.</p><p><strong>Output:</strong> <code>2</code></p></div>
+                </div>
+                <div class="source-visual-gallery">
+                    <figure class="source-visual">
+                        <img src="images/image19.png" alt="Binary search tree showing nodes 2 and 8 with lowest common ancestor 6">
+                        <figcaption>Source visual: nodes 2 and 8 meet at 6.</figcaption>
+                    </figure>
+                    <figure class="source-visual">
+                        <img src="images/image64.png" alt="Binary search tree showing node 2 as the lowest common ancestor of nodes 2 and 4">
+                        <figcaption>Source visual: a node may be its own ancestor.</figcaption>
+                    </figure>
+                </div>
+                <p><strong>Approach:</strong> The document follows BST ordering: recurse left if both values are smaller, right if both are larger, otherwise the current root separates them and is the answer.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-type">TreeNode</span> <span class="token-method">lowestCommonAncestor</span>(<span class="token-type">TreeNode</span> root, <span class="token-type">TreeNode</span> first, <span class="token-type">TreeNode</span> second) {
+    <span class="token-keyword">if</span> (root == <span class="token-keyword">null</span>) <span class="token-keyword">return</span> <span class="token-keyword">null</span>;
+    <span class="token-keyword">if</span> (first.val &lt; root.val &amp;&amp; second.val &lt; root.val) {
+        <span class="token-keyword">return</span> <span class="token-method">lowestCommonAncestor</span>(root.left, first, second);
+    } <span class="token-keyword">else</span> <span class="token-keyword">if</span> (first.val &gt; root.val &amp;&amp; second.val &gt; root.val) {
+        <span class="token-keyword">return</span> <span class="token-method">lowestCommonAncestor</span>(root.right, first, second);
+    }
+    <span class="token-keyword">return</span> root;
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(h)</span><span><strong>Space</strong>O(h)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> The algorithm chooses only one child per level and therefore follows one root-to-node path of height h.</p><p><strong>Space:</strong> Recursive calls occupy up to h stack frames; h is O(log n) for a balanced BST and O(n) when skewed.</p></div>
+            </article>
+
+            <article class="problem" id="balanced-binary-tree" data-source-order="31">
+                <h3>31. 110. Balanced Binary Tree</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Return whether the height of every node’s left and right subtrees differs by no more than one.</div>
+                <div class="examples">
+                    <div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>[3,9,20,null,null,15,7]</code></p><p><strong>Output:</strong> <code>true</code></p></div>
+                    <div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>[1,2,2,3,3,null,null,4,4]</code></p><p><strong>Output:</strong> <code>false</code></p></div>
+                </div>
+                <div class="source-visual-gallery">
+                    <figure class="source-visual">
+                        <img src="images/image31.png" alt="Balanced binary tree with root 3 and subtrees of similar height">
+                        <figcaption>Source visual: balanced tree.</figcaption>
+                    </figure>
+                    <figure class="source-visual">
+                        <img src="images/image48.png" alt="Unbalanced binary tree with a deeper left subtree">
+                        <figcaption>Source visual: unbalanced tree.</figcaption>
+                    </figure>
+                </div>
+                <p><strong>Approach 1:</strong> The source height-first DFS returns <code>-1</code> immediately for an unbalanced subtree; otherwise it returns its height.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-type">boolean</span> <span class="token-method">isBalanced</span>(<span class="token-type">TreeNode</span> root) {
+    <span class="token-keyword">return</span> <span class="token-method">dfsHeight</span>(root) != -<span class="token-number">1</span>;
+}
+
+<span class="token-type">int</span> <span class="token-method">dfsHeight</span>(<span class="token-type">TreeNode</span> root) {
+    <span class="token-keyword">if</span> (root == <span class="token-keyword">null</span>) <span class="token-keyword">return</span> <span class="token-number">0</span>;
+    <span class="token-type">int</span> leftHeight = <span class="token-method">dfsHeight</span>(root.left);
+    <span class="token-keyword">if</span> (leftHeight == -<span class="token-number">1</span>) <span class="token-keyword">return</span> -<span class="token-number">1</span>;
+    <span class="token-type">int</span> rightHeight = <span class="token-method">dfsHeight</span>(root.right);
+    <span class="token-keyword">if</span> (rightHeight == -<span class="token-number">1</span> || <span class="token-type">Math</span>.<span class="token-method">abs</span>(leftHeight - rightHeight) &gt; <span class="token-number">1</span>) <span class="token-keyword">return</span> -<span class="token-number">1</span>;
+    <span class="token-keyword">return</span> <span class="token-type">Math</span>.<span class="token-method">max</span>(leftHeight, rightHeight) + <span class="token-number">1</span>;
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(h)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> Each tree node’s height is computed once; an unbalanced branch can return early.</p><p><strong>Space:</strong> DFS recursion keeps at most one root-to-leaf path, whose length is h.</p></div>
+                <p><strong>Approach 2:</strong> The document also gives the same sentinel-height idea as a separate <code>Height</code> helper.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-type">boolean</span> <span class="token-method">isBalanced</span>(<span class="token-type">TreeNode</span> root) {
+    <span class="token-keyword">if</span> (root == <span class="token-keyword">null</span>) <span class="token-keyword">return</span> <span class="token-keyword">true</span>;
+    <span class="token-keyword">return</span> <span class="token-method">Height</span>(root) != -<span class="token-number">1</span>;
+}
+
+<span class="token-keyword">public</span> <span class="token-type">int</span> <span class="token-method">Height</span>(<span class="token-type">TreeNode</span> root) {
+    <span class="token-keyword">if</span> (root == <span class="token-keyword">null</span>) <span class="token-keyword">return</span> <span class="token-number">0</span>;
+    <span class="token-type">int</span> leftHeight = <span class="token-method">Height</span>(root.left);
+    <span class="token-type">int</span> rightHeight = <span class="token-method">Height</span>(root.right);
+    <span class="token-keyword">if</span> (leftHeight == -<span class="token-number">1</span> || rightHeight == -<span class="token-number">1</span> || <span class="token-type">Math</span>.<span class="token-method">abs</span>(leftHeight - rightHeight) &gt; <span class="token-number">1</span>) <span class="token-keyword">return</span> -<span class="token-number">1</span>;
+    <span class="token-keyword">return</span> <span class="token-type">Math</span>.<span class="token-method">max</span>(leftHeight, rightHeight) + <span class="token-number">1</span>;
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(h)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> It makes one height computation per node rather than repeatedly recomputing subtree heights.</p><p><strong>Space:</strong> Its only input-dependent auxiliary memory is the recursion path of height h.</p></div>
+            </article>
+
+            <article class="problem" id="first-bad-version" data-source-order="32">
+                <h3>32. First Bad Version</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Find the first failing version when every version after it also fails.</div>
+                <div class="examples">
+                    <div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>n = 5</code>, first bad version <code>4</code>.</p><p><strong>Output:</strong> <code>4</code></p></div>
+                    <div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>n = 1</code>, first bad version <code>1</code>.</p><p><strong>Output:</strong> <code>1</code></p></div>
+                </div>
+                <figure class="source-visual">
+                    <img src="images/image10.png" alt="First Bad Version examples showing binary-search API calls">
+                    <figcaption>Source visual: successive version checks identify the first bad version.</figcaption>
+                </figure>
+                <p><strong>Approach:</strong> The source uses binary search. On a bad middle version, it retains the lower half; on a good one, it retains the upper half. The final <code>start</code> is the first bad version.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-type">Solution</span> <span class="token-keyword">extends</span> <span class="token-type">VersionControl</span> {
+    <span class="token-keyword">public</span> <span class="token-type">int</span> <span class="token-method">firstBadVersion</span>(<span class="token-type">int</span> versions) {
+        <span class="token-type">int</span> start = <span class="token-number">1</span>, end = versions;
+        <span class="token-keyword">while</span> (start &lt;= end) {
+            <span class="token-type">int</span> middle = start + (end - start) / <span class="token-number">2</span>;
+            <span class="token-keyword">if</span> (<span class="token-method">isBadVersion</span>(middle)) end = middle - <span class="token-number">1</span>;
+            <span class="token-keyword">else</span> start = middle + <span class="token-number">1</span>;
+        }
+        <span class="token-keyword">return</span> start;
+    }
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(log n)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> Each call to <code>isBadVersion</code> halves the remaining version interval.</p><p><strong>Space:</strong> The iterative search stores only start, end, and middle.</p></div>
+            </article>
+
+            <article class="problem" id="ransom-note" data-source-order="33">
+                <h3>33. Ransom Note</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Return whether every letter of <code>ransomNote</code> can be supplied by <code>magazine</code> at most once.</div>
+                <div class="examples">
+                    <div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>ransomNote = "a", magazine = "b"</code></p><p><strong>Output:</strong> <code>false</code></p></div>
+                    <div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>ransomNote = "aa", magazine = "aab"</code></p><p><strong>Output:</strong> <code>true</code></p></div>
+                </div>
+                <p><strong>Approach:</strong> The source counts available magazine letters, then decrements the matching counter for each ransom-note letter. A negative count means a required letter is unavailable.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-type">boolean</span> <span class="token-method">canConstruct</span>(<span class="token-type">String</span> ransomNote, <span class="token-type">String</span> magazine) {
+    <span class="token-type">int</span>[] counts = <span class="token-keyword">new</span> <span class="token-type">int</span>[<span class="token-number">26</span>];
+    <span class="token-keyword">for</span> (<span class="token-type">char</span> character : magazine.<span class="token-method">toCharArray</span>()) ++counts[character - <span class="token-string">'a'</span>];
+    <span class="token-keyword">for</span> (<span class="token-type">char</span> character : ransomNote.<span class="token-method">toCharArray</span>()) {
+        <span class="token-keyword">if</span> (--counts[character - <span class="token-string">'a'</span>] &lt; <span class="token-number">0</span>) <span class="token-keyword">return</span> <span class="token-keyword">false</span>;
+    }
+    <span class="token-keyword">return</span> <span class="token-keyword">true</span>;
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(m + r)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> It scans all m magazine characters and all r ransom-note characters once.</p><p><strong>Space:</strong> The 26-counter array is fixed-size for lowercase English letters.</p></div>
+            </article>
+
+            <article class="problem" id="four-sum-ii" data-source-order="34">
+                <h3>34. 4 Sum II</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Count tuples where <code>nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0</code>.</div>
+                <div class="examples"><div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>nums1 = [1,2], nums2 = [-2,-1], nums3 = [-1,2], nums4 = [0,2]</code></p><p><strong>Output:</strong> <code>2</code></p></div><div class="example"><strong>Example 2</strong><p><strong>Input:</strong> all four arrays are <code>[0]</code></p><p><strong>Output:</strong> <code>1</code></p></div></div>
+                <figure class="source-visual"><img src="images/image21.png" alt="4 Sum II examples and the two tuples that total zero"><figcaption>Source visual: two valid zero-sum tuples.</figcaption></figure>
+                <p><strong>Approach:</strong> The source stores every sum from the first two arrays in a frequency map, then looks up the complement of each sum from the last two arrays.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-type">int</span> <span class="token-method">fourSumCount</span>(<span class="token-type">int</span>[] first, <span class="token-type">int</span>[] second, <span class="token-type">int</span>[] third, <span class="token-type">int</span>[] fourth) {
+    <span class="token-type">Map</span>&lt;<span class="token-type">Integer</span>, <span class="token-type">Integer</span>&gt; sums = <span class="token-keyword">new</span> <span class="token-type">HashMap</span>&lt;&gt;();
+    <span class="token-keyword">for</span> (<span class="token-type">int</span> a : first) <span class="token-keyword">for</span> (<span class="token-type">int</span> b : second) sums.<span class="token-method">put</span>(a + b, sums.<span class="token-method">getOrDefault</span>(a + b, <span class="token-number">0</span>) + <span class="token-number">1</span>);
+    <span class="token-type">int</span> count = <span class="token-number">0</span>;
+    <span class="token-keyword">for</span> (<span class="token-type">int</span> c : third) <span class="token-keyword">for</span> (<span class="token-type">int</span> d : fourth) count += sums.<span class="token-method">getOrDefault</span>(-(c + d), <span class="token-number">0</span>);
+    <span class="token-keyword">return</span> count;
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n²)</span><span><strong>Space</strong>O(n²)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> There are n² pairs in each half of the four arrays.</p><p><strong>Space:</strong> The map may store a count for every first-half pair sum.</p></div>
+            </article>
+
+            <article class="problem" id="fizz-buzz" data-source-order="35">
+                <h3>35. FizzBuzz</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Return <code>Fizz</code>, <code>Buzz</code>, <code>FizzBuzz</code>, or the number for every value from 1 through n.</div>
+                <div class="examples"><div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>n = 3</code></p><p><strong>Output:</strong> <code>["1", "2", "Fizz"]</code></p></div><div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>n = 5</code></p><p><strong>Output:</strong> <code>["1", "2", "Fizz", "4", "Buzz"]</code></p></div></div>
+                <p><strong>Approach:</strong> The source checks divisibility by both 3 and 5 before the individual checks, so a multiple of 15 becomes <code>FizzBuzz</code>.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-type">List</span>&lt;<span class="token-type">String</span>&gt; <span class="token-method">fizzBuzz</span>(<span class="token-type">int</span> n) {
+    <span class="token-type">List</span>&lt;<span class="token-type">String</span>&gt; answer = <span class="token-keyword">new</span> <span class="token-type">ArrayList</span>&lt;&gt;();
+    <span class="token-keyword">for</span> (<span class="token-type">int</span> value = <span class="token-number">1</span>; value &lt;= n; value++) {
+        <span class="token-keyword">if</span> (value % <span class="token-number">3</span> == <span class="token-number">0</span> &amp;&amp; value % <span class="token-number">5</span> == <span class="token-number">0</span>) answer.<span class="token-method">add</span>(<span class="token-string">"FizzBuzz"</span>);
+        <span class="token-keyword">else</span> <span class="token-keyword">if</span> (value % <span class="token-number">3</span> == <span class="token-number">0</span>) answer.<span class="token-method">add</span>(<span class="token-string">"Fizz"</span>);
+        <span class="token-keyword">else</span> <span class="token-keyword">if</span> (value % <span class="token-number">5</span> == <span class="token-number">0</span>) answer.<span class="token-method">add</span>(<span class="token-string">"Buzz"</span>);
+        <span class="token-keyword">else</span> answer.<span class="token-method">add</span>(value + <span class="token-string">""</span>);
+    }
+    <span class="token-keyword">return</span> answer;
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(n)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> It performs a constant number of checks for each value.</p><p><strong>Space:</strong> The returned list stores n strings.</p></div>
+            </article>
+
+            <article class="problem" id="longest-substring-k-repeats" data-source-order="36">
+                <h3>36. Longest Substring with At Least K Repeating Characters</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Find the longest substring in which every character occurs at least <code>k</code> times.</div>
+                <div class="examples"><div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>s = "aaabb", k = 3</code></p><p><strong>Output:</strong> <code>3</code></p></div><div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>s = "ababbc", k = 2</code></p><p><strong>Output:</strong> <code>5</code></p></div></div>
+                <p><strong>Approach:</strong> The source counts the current string. Any character occurring fewer than k times cannot belong to a valid answer, so the solution splits around it and solves the pieces recursively.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-type">int</span> <span class="token-method">longestSubstring</span>(<span class="token-type">String</span> text, <span class="token-type">int</span> k) {
+    <span class="token-keyword">if</span> (text.<span class="token-method">length</span>() &lt; k) <span class="token-keyword">return</span> <span class="token-number">0</span>;
+    <span class="token-type">int</span>[] counts = <span class="token-keyword">new</span> <span class="token-type">int</span>[<span class="token-number">26</span>];
+    <span class="token-keyword">for</span> (<span class="token-type">int</span> index = <span class="token-number">0</span>; index &lt; text.<span class="token-method">length</span>(); index++) counts[text.<span class="token-method">charAt</span>(index) - <span class="token-string">'a'</span>]++;
+    <span class="token-keyword">for</span> (<span class="token-type">int</span> index = <span class="token-number">0</span>; index &lt; text.<span class="token-method">length</span>(); index++) {
+        <span class="token-keyword">if</span> (counts[text.<span class="token-method">charAt</span>(index) - <span class="token-string">'a'</span>] &gt;= k) <span class="token-keyword">continue</span>;
+        <span class="token-type">int</span> next = index + <span class="token-number">1</span>;
+        <span class="token-keyword">while</span> (next &lt; text.<span class="token-method">length</span>() &amp;&amp; counts[text.<span class="token-method">charAt</span>(next) - <span class="token-string">'a'</span>] &lt; k) next++;
+        <span class="token-keyword">return</span> <span class="token-type">Math</span>.<span class="token-method">max</span>(<span class="token-method">longestSubstring</span>(text.<span class="token-method">substring</span>(<span class="token-number">0</span>, index), k), <span class="token-method">longestSubstring</span>(text.<span class="token-method">substring</span>(next), k));
+    }
+    <span class="token-keyword">return</span> text.<span class="token-method">length</span>();
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n²)</span><span><strong>Space</strong>O(n)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> Repeated splitting and substring creation can rescan characters across recursive calls, giving O(n²) in the worst case.</p><p><strong>Space:</strong> Recursive calls and substring objects can retain O(n) data along a call path.</p></div>
+            </article>
+
+            <article class="problem" id="kth-smallest-matrix" data-source-order="37">
+                <h3>37. Kth Smallest Element in a Sorted Matrix</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Find the kth smallest value in a matrix whose rows and columns are sorted.</div>
+                <div class="examples"><div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>[[1,5,9],[10,11,13],[12,13,15]], k = 8</code></p><p><strong>Output:</strong> <code>13</code></p></div><div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>[[-5]], k = 1</code></p><p><strong>Output:</strong> <code>-5</code></p></div></div>
+                <p><strong>Approach:</strong> The source binary-searches the value range. For each candidate value, it counts entries no larger than it by walking from the top-right corner.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-type">int</span> <span class="token-method">kthSmallest</span>(<span class="token-type">int</span>[][] matrix, <span class="token-type">int</span> k) {
+    <span class="token-type">int</span> low = matrix[<span class="token-number">0</span>][<span class="token-number">0</span>], high = matrix[matrix.length - <span class="token-number">1</span>][matrix[<span class="token-number">0</span>].length - <span class="token-number">1</span>] + <span class="token-number">1</span>;
+    <span class="token-keyword">while</span> (low &lt; high) {
+        <span class="token-type">int</span> middle = low + (high - low) / <span class="token-number">2</span>, count = <span class="token-number">0</span>, column = matrix[<span class="token-number">0</span>].length - <span class="token-number">1</span>;
+        <span class="token-keyword">for</span> (<span class="token-type">int</span> row = <span class="token-number">0</span>; row &lt; matrix.length; row++) { <span class="token-keyword">while</span> (column &gt;= <span class="token-number">0</span> &amp;&amp; matrix[row][column] &gt; middle) column--; count += column + <span class="token-number">1</span>; }
+        <span class="token-keyword">if</span> (count &lt; k) low = middle + <span class="token-number">1</span>; <span class="token-keyword">else</span> high = middle;
+    }
+    <span class="token-keyword">return</span> low;
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n log R)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> Each value-range search step counts in O(n) for an n × n matrix, and there are O(log R) candidate values in range R.</p><p><strong>Space:</strong> It keeps only scalar bounds, counters, and indices.</p></div>
+            </article>
+
+            <article class="problem" id="sum-without-operators" data-source-order="38">
+                <h3>38. Sum of Two Integers without + and -</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Return the sum of two integers without using the addition or subtraction operators.</div>
+                <div class="examples"><div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>a = 1, b = 2</code></p><p><strong>Output:</strong> <code>3</code></p></div><div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>a = -2, b = 3</code></p><p><strong>Output:</strong> <code>1</code></p></div></div>
+                <p><strong>Approach:</strong> The source uses XOR for the sum without carry, AND for carry bits, then shifts the carry left until no carry remains.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-type">int</span> <span class="token-method">getSum</span>(<span class="token-type">int</span> first, <span class="token-type">int</span> second) {
+    <span class="token-keyword">while</span> (second != <span class="token-number">0</span>) {
+        <span class="token-type">int</span> carry = first &amp; second;
+        first = first ^ second;
+        second = carry &lt;&lt; <span class="token-number">1</span>;
+    }
+    <span class="token-keyword">return</span> first;
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(w)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> Carry bits may propagate through w bit positions. For Java’s fixed 32-bit integers this is O(1).</p><p><strong>Space:</strong> It stores only the current operands and carry.</p></div>
+            </article>
+
+            <article class="problem" id="subtract-without-operators" data-source-order="39">
+                <h3>39. Subtract Two Integers without + and -</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Return <code>a - b</code> without addition or subtraction operators.</div>
+                <div class="examples"><div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>a = 5, b = 3</code></p><p><strong>Output:</strong> <code>2</code></p></div><div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>a = 3, b = 5</code></p><p><strong>Output:</strong> <code>-2</code></p></div></div>
+                <p><strong>Approach:</strong> The document mirrors bit addition: XOR gives the difference without a borrow, while <code>(~a) &amp; b</code> finds borrow bits to shift left.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-type">int</span> <span class="token-method">getSubtract</span>(<span class="token-type">int</span> first, <span class="token-type">int</span> second) {
+    <span class="token-keyword">while</span> (second != <span class="token-number">0</span>) {
+        <span class="token-type">int</span> borrow = (~first) &amp; second;
+        first = first ^ second;
+        second = borrow &lt;&lt; <span class="token-number">1</span>;
+    }
+    <span class="token-keyword">return</span> first;
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(w)</span><span><strong>Space</strong>O(1)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> Borrow propagation can move through w bits; for a fixed-width Java integer, that is bounded by a constant.</p><p><strong>Space:</strong> The loop uses only one additional integer, <code>borrow</code>.</p></div>
+            </article>
+
+            <article class="problem" id="reverse-preserving-spaces" data-source-order="40">
+                <h3>40. Reverse a String Preserving the Order of Spaces</h3>
+                <div class="problem-summary"><strong>Problem:</strong> Reverse non-space characters while leaving each space at its original position.</div>
+                <div class="examples"><div class="example"><strong>Example 1</strong><p><strong>Input:</strong> <code>"My name is Ram"</code></p><p><strong>Output:</strong> <code>"ma Rsie ma nyM"</code></p></div><div class="example"><strong>Example 2</strong><p><strong>Input:</strong> <code>"a b"</code></p><p><strong>Output:</strong> <code>"b a"</code></p></div></div>
+                <p><strong>Approach:</strong> The source keeps two pointers. When either pointer reaches a space it skips it; otherwise it swaps the two characters.</p>
+                <pre><code class="language-java"><span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-keyword">void</span> <span class="token-method">reverseString</span>(<span class="token-type">String</span> text) {
+    <span class="token-type">char</span>[] result = text.<span class="token-method">toCharArray</span>();
+    <span class="token-type">int</span> start = <span class="token-number">0</span>, end = result.length - <span class="token-number">1</span>;
+    <span class="token-keyword">while</span> (start &lt; end) {
+        <span class="token-keyword">if</span> (result[start] == <span class="token-string">' '</span>) { start++; <span class="token-keyword">continue</span>; }
+        <span class="token-keyword">if</span> (result[end] == <span class="token-string">' '</span>) { end--; <span class="token-keyword">continue</span>; }
+        <span class="token-type">char</span> temporary = result[start]; result[start++] = result[end]; result[end--] = temporary;
+    }
+    System.out.<span class="token-method">println</span>(<span class="token-type">String</span>.<span class="token-method">valueOf</span>(result));
+}</code></pre>
+                <div class="complexity"><span><strong>Time</strong>O(n)</span><span><strong>Space</strong>O(n)</span></div>
+                <div class="complexity-reason"><p><strong>Time:</strong> Each pointer moves inward over each position at most once.</p><p><strong>Space:</strong> The source creates a character array copy of the input string.</p></div>
+            </article>
+        </section>
+
+        <section id="sorting">
+            <h2>Sorting algorithms</h2>
+            <p>These comparison sorts are useful for interviews because they demonstrate loops, invariants, and in-place array operations. In production Java, prefer <code>Arrays.sort</code> unless the exercise requires an implementation.</p>
+            <table>
+                <thead>
+                    <tr><th>Algorithm</th><th>Best</th><th>Average / Worst</th><th>Extra Space</th><th>Use case</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Bubble sort</td><td>O(n)</td><td>O(n²)</td><td>O(1)</td><td>Learning; very small inputs</td></tr>
+                    <tr><td>Selection sort</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td><td>When minimizing swaps matters</td></tr>
+                    <tr><td>Insertion sort</td><td>O(n)</td><td>O(n²)</td><td>O(1)</td><td>Small or nearly sorted inputs</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="backlog">
+            <h2>Practice backlog</h2>
+            <p>These problems were identified in the legacy notes but do not yet have a reviewed solution in this guide. They are intentionally kept separate from solved material.</p>
+            <div class="backlog">
+                <article>
+                    <h3>Strings</h3>
+                    <ul>
+                        <li>Largest palindromic substring</li>
+                        <li>String compression</li>
+                        <li>Duplicate character detection</li>
+                        <li>Reverse a string without moving special characters</li>
+                        <li>Longest substring without repeating characters</li>
+                        <li>Zigzag conversion</li>
+                    </ul>
+                </article>
+                <article>
+                    <h3>Arrays and matrices</h3>
+                    <ul>
+                        <li>Second largest and second smallest value</li>
+                        <li>Frequency of every array element</li>
+                        <li>Subarray with a given sum</li>
+                        <li>Missing number in an array</li>
+                        <li>Matrix transpose and multiplication</li>
+                        <li>Rotate a matrix by 90 degrees</li>
+                    </ul>
+                </article>
+                <article>
+                    <h3>Linked lists and trees</h3>
+                    <ul>
+                        <li>Linked-list palindrome check</li>
+                        <li>Reverse a linked list</li>
+                        <li>Merge two sorted linked lists</li>
+                        <li>Cycle detection</li>
+                        <li>Mirror a binary tree</li>
+                        <li>Level-order traversal</li>
+                    </ul>
+                </article>
+                <article>
+                    <h3>Stacks, queues, and search</h3>
+                    <ul>
+                        <li>Balanced parentheses</li>
+                        <li>Implement a stack using queues</li>
+                        <li>Implement a queue using stacks</li>
+                        <li>Search in a rotated sorted array</li>
+                        <li>Find the first and last target position</li>
+                        <li>Find duplicate values</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <footer>
+            <p>Keep this file as the clean study version. The Google Docs export is retained separately as an archive while content is reviewed and migrated.</p>
+        </footer>
+    </main>
+    <a class="back-to-top" href="#top" aria-label="Back to the top of the page">Back to top</a>
+    <script>
+        const themeButtons = document.querySelectorAll('.theme-option');
+
+        themeButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                const selectedTheme = button.dataset.theme;
+                document.body.dataset.codeTheme = selectedTheme;
+                themeButtons.forEach((option) => {
+                    option.setAttribute('aria-pressed', String(option === button));
+                });
+            });
+        });
+
+        const problemsSection = document.getElementById('problems');
+        const orderedCards = Array.from(problemsSection.querySelectorAll('.problem'))
+            .map((card, originalPosition) => ({
+                card,
+                originalPosition,
+                sourceOrder: Number.parseInt(card.dataset.sourceOrder || '9999', 10)
+            }))
+            .sort((first, second) => first.sourceOrder - second.sourceOrder
+                || first.originalPosition - second.originalPosition);
+
+        orderedCards.forEach(({ card }) => problemsSection.append(card));
+    </script>
+</body>
+</html>
